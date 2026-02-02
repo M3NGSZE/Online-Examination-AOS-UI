@@ -3,7 +3,7 @@ package com.m3ngsze.sentry.online_examination_aos_ui.feature.splash
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -27,22 +27,22 @@ fun SplashScreen(navController: NavHostController){
 
     LaunchedEffect (Unit){
         delay(2000)
-        navController.navigate(Screen.Room.rout){
+        navController.navigate(Screen.Login.rout){
             popUpTo (Screen.Splash.rout){ inclusive = true }
         }
     }
 
-    Row (
+    Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF53B175)),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+            .background(Color(0xFFFFFFFF)),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "App Logo",
-            modifier = Modifier.size(60.dp)
+            modifier = Modifier.size(200.dp)
         )
 
         Spacer(
@@ -50,9 +50,9 @@ fun SplashScreen(navController: NavHostController){
         )
 
         Text(
-            text = "nectar",
-            color = Color.White,
-            fontSize = 50.sp)
+            text = "Online-Examination",
+            color = Color(0xFF1EA2B2),
+            fontSize = 30.sp)
     }
 
 }

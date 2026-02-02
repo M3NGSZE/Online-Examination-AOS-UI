@@ -2,10 +2,16 @@ package com.m3ngsze.sentry.online_examination_aos_ui.core.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 
 fun NavGraphBuilder.rootNavGraph(navController: NavHostController) {
-    navigation(startDestination = Screen.Splash.rout, route = ROOT_GRAPH_ROUT){
+    navigation(startDestination = Screen.Room.rout, route = ROOT_GRAPH_ROUT){
 
+        composable (route = Screen.Splash.rout) { SplashScreen(navController = navController) }
+
+        composable (route = Screen.Room.rout) { RoomScreen(navController = navController) }
     }
 }
