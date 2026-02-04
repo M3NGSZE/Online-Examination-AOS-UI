@@ -8,7 +8,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.LoginScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController){
-    navigation(startDestination = Screen.Splash.rout, route = AUTH_GRAPH_ROUT){
+    navigation(startDestination = Screen.Login.rout, route = AUTH_GRAPH_ROUT){
         composable (route = Screen.Splash.rout) { SplashScreen(navController = navController) }
 
         composable (route = Screen.Login.rout) { LoginScreen(navController = navController) }
