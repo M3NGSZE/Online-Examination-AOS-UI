@@ -1,8 +1,10 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.auth
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -45,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.m3ngsze.sentry.online_examination_aos_ui.R
+import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItem
+import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItemList
 
 @Composable
 fun LoginScreen(navController : NavHostController){
@@ -52,6 +59,7 @@ fun LoginScreen(navController : NavHostController){
         modifier = Modifier
             .padding(start = 25.dp, bottom = 25.dp, end = 25.dp)
             .background(Color(0xFFFCFCFC))
+            .fillMaxWidth()
     ){
 
         Box(
@@ -81,7 +89,9 @@ fun LoginScreen(navController : NavHostController){
 
         Oauth2Form()
 
+        Spacer(modifier = Modifier.height(75.dp))
 
+        Signup("Don't have an account?","Sign up")
     }
 }
 
@@ -181,39 +191,76 @@ fun LoginForm(){
 @Composable
 @Preview
 fun Oauth2Form(){
-    Text(
-        text = "- Or sign in with -",
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth(),
-        color = Color(0x8849494A)
-    )
+    Column {
+        Text(
+            text = "- Or sign in with -",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+            color = Color(0x8849494A)
+        )
 
-    Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
-    Row (
-        modifier = Modifier
-                .fillMaxWidth(),
-    ){
-        Card (
+        LazyVerticalGrid (
+            columns = GridCells.Fixed(3),
             modifier = Modifier
-                .clickable {}
-                .width(70.dp)
-                .height(50.dp),
-            elevation = CardDefaults.cardElevation(8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            ),
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.google),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(25.dp)
-                    .align(Alignment.CenterHorizontally),
+                .fillMaxWidth()
+                .padding(start = 10.dp, end = 10.dp)
+        ) {
+            items(AuthItemList, key = {item -> item.id}){
+                    it -> AuthItemRender(it)
+            }
+        }
+    }
+}
 
+@Composable
+fun AuthItemRender(item: AuthItem){
+    Card(
+        modifier = Modifier
+            .clickable {}
+            .width(70.dp)
+            .height(40.dp)
+            .padding(horizontal = 10.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        border = BorderStroke(1.dp, Color(0x611A1A1A))
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(item.img),
+                contentDescription = item.name,
+                modifier = Modifier.size(item.size)
             )
         }
+    }
+}
 
+@Composable
+fun Signup(des1: String, des2: String){
+    Row (
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ){
+        Text(
+            text = des1,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium
+        )
+        Text(
+            text = " $des2",
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color(0xFF1E319B),
+            modifier = Modifier
+                .clickable{
+                }
+        )
     }
 }
