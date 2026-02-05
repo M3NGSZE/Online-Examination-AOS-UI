@@ -24,6 +24,7 @@ class AuthViewModel @Inject constructor(
 
     fun login(email: String, password: String){
         viewModelScope.launch {
+            errorState = null // Clear previous errors
             try {
                 authState = authUseCase(email, password)
             } catch (e: Exception){

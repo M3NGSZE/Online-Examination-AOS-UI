@@ -54,6 +54,8 @@ import com.m3ngsze.sentry.online_examination_aos_ui.R
 import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItem
 import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItemList
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
+import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.ROOT_GRAPH_ROUT
+import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.AUTH_GRAPH_ROUT
 
 @Composable
 fun LoginScreen(
@@ -90,6 +92,17 @@ fun LoginScreen(
 
         LoginForm(viewModel)
 
+        val errorState = viewModel.errorState
+        if (errorState != null) {
+            Spacer(modifier = Modifier.height(15.dp))
+            Text(
+                text = errorState,
+                color = Color.Red,
+                fontSize = 14.sp,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
         Spacer(modifier = Modifier.height(75.dp))
 
         Oauth2Form()
@@ -103,8 +116,8 @@ fun LoginScreen(
 
     LaunchedEffect(authState) {
         if (authState != null) {
-            navController.navigate(Screen.Room.route) {
-                popUpTo(Screen.Login.route) { inclusive = true }
+            navController.navigate(ROOT_GRAPH_ROUT) {
+                popUpTo(AUTH_GRAPH_ROUT) { inclusive = true }
             }
         }
     }
