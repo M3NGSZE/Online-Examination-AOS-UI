@@ -30,6 +30,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,13 +49,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.m3ngsze.sentry.online_examination_aos_ui.R
 import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItem
 import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItemList
+import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
 @Composable
-fun LoginScreen(navController : NavHostController){
+fun LoginScreen(
+    navController : NavHostController,
+    viewModel: AuthViewModel = hiltViewModel()
+){
     Column (
         modifier = Modifier
             .padding(start = 25.dp, bottom = 25.dp, end = 25.dp)
@@ -83,7 +89,7 @@ fun LoginScreen(navController : NavHostController){
 
         Spacer(modifier = Modifier.height(35.dp))
 
-        LoginForm()
+        LoginForm(navController, viewModel)
 
         Spacer(modifier = Modifier.height(75.dp))
 
@@ -93,10 +99,21 @@ fun LoginScreen(navController : NavHostController){
 
         Signup("Don't have an account?","Sign up")
     }
+
+    val authState = viewModel.authState
+
+    LaunchedEffect (authState) {
+        if (authState != null) {
+            navController.navigate(Screen.Room.route)
+        }
+    }
 }
 
 @Composable
-fun LoginForm(){
+fun LoginForm(
+    navController : NavHostController,
+    viewModel: AuthViewModel = hiltViewModel()
+){
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -174,7 +191,7 @@ fun LoginForm(){
 
     Button(
         onClick = {
-
+            viewModel.login(email, password)
         },
         modifier = Modifier
             .fillMaxWidth()

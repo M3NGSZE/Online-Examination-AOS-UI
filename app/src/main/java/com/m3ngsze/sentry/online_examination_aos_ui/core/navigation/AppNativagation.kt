@@ -19,7 +19,7 @@ fun AppNavigation(navController: NavHostController){
     ) { innerPadding ->
         NavHost(
             modifier = Modifier.padding(paddingValues = innerPadding),
-            startDestination = ROOT_GRAPH_ROUT,
+            startDestination = AUTH_GRAPH_ROUT,
             navController = navController
         ){
             authNavGraph(navController = navController)

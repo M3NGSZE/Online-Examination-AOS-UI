@@ -5,8 +5,9 @@ import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.AuthApiServi
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.AuthRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApiService
 ) : AuthRepository {
 

@@ -4,7 +4,7 @@ const val ROOT_GRAPH_ROUT = "root"
 
 const val AUTH_GRAPH_ROUT = "auth"
 
-sealed class Screen(val rout: String, val title: String) {
+sealed class Screen(val route: String, val title: String) {
 
     object Splash: Screen("splash_screen", "splash")
 
