@@ -3,7 +3,6 @@ package com.m3ngsze.sentry.online_examination_aos_ui.feature.auth
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -89,7 +88,7 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(35.dp))
 
-        LoginForm(navController, viewModel)
+        LoginForm(viewModel)
 
         Spacer(modifier = Modifier.height(75.dp))
 
@@ -102,16 +101,17 @@ fun LoginScreen(
 
     val authState = viewModel.authState
 
-    LaunchedEffect (authState) {
+    LaunchedEffect(authState) {
         if (authState != null) {
-            navController.navigate(Screen.Room.route)
+            navController.navigate(Screen.Room.route) {
+                popUpTo(Screen.Login.route) { inclusive = true }
+            }
         }
     }
 }
 
 @Composable
 fun LoginForm(
-    navController : NavHostController,
     viewModel: AuthViewModel = hiltViewModel()
 ){
 
@@ -235,7 +235,6 @@ fun Oauth2Form(){
 fun AuthItemRender(item: AuthItem){
     Card(
         modifier = Modifier
-            .clickable {}
             .width(70.dp)
             .height(40.dp)
             .padding(horizontal = 10.dp),
@@ -275,9 +274,6 @@ fun Signup(des1: String, des2: String){
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium,
             color = Color(0xFF1E319B),
-            modifier = Modifier
-                .clickable{
-                }
         )
     }
 }
