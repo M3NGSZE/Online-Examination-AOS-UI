@@ -29,7 +29,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             errorState = null // Clear previous errors
             try {
-                authState = authUseCase(email, password)
+                authState = authUseCase.login(email, password)
             }catch (e: HttpException) {
 
                 val errorJson = e.response()?.errorBody()?.string()
