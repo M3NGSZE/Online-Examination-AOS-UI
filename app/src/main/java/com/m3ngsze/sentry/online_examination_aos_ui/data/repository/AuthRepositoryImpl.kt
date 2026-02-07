@@ -18,7 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
 
         val response = api.login(AuthRequest(email, password))
 
-        if (response.status != 200)
+        if (response.status != "200 OK")
             throw Exception(response.message)
 
         return response.payload.toDomain()

@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.LoginScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.SignUpScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController){
@@ -12,5 +13,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
         composable (route = Screen.Splash.route) { SplashScreen(navController = navController) }
 
         composable (route = Screen.Login.route) { LoginScreen(navController = navController) }
+
+        composable (route = Screen.Signup.route) { SignUpScreen(navController = navController) }
     }
 }
