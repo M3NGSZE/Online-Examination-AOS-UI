@@ -11,7 +11,7 @@ data class AuthItem(
     val size: Dp
 )
 
-val AuthItemList = listOf<AuthItem>(
+val AuthItemList = listOf(
     AuthItem(
         id = 1,
         name = "google",

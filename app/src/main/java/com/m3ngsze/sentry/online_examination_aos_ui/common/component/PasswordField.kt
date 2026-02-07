@@ -1,6 +1,7 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.common.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -26,33 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.m3ngsze.sentry.online_examination_aos_ui.R
 
 @Composable
-fun TextBox(label: String, outline: Long, getValue: (String) -> Unit){
-    var x by remember { mutableStateOf("") }
-    getValue(x)
-
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
-        value = x,
-        onValueChange = {x = it},
-        placeholder = {Text(label)},
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color.Transparent,
-            focusedContainerColor = Color.Transparent,
-            focusedIndicatorColor = Color(0xFF305EAF),
-            unfocusedIndicatorColor = Color(0x73FF0000)
-        ),
-        singleLine = true,
-        textStyle = TextStyle(
-            fontSize = 18.sp
-        ),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            imeAction = ImeAction.Done
-        )
-    )
-}
-
-@Composable
 fun PasswordBox(label: String, outline: Long, getValue: (String) -> Unit){
     var x by remember { mutableStateOf("") }
     getValue(x)
@@ -65,7 +39,9 @@ fun PasswordBox(label: String, outline: Long, getValue: (String) -> Unit){
         painterResource(id = R.drawable.invisible_icon)
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         value = x,
         onValueChange = {x = it},
         placeholder = {Text(label)},
