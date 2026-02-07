@@ -52,36 +52,9 @@ fun LoginScreen(
             .fillMaxWidth()
     ){
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "logo",
-                modifier = Modifier.size(180.dp)
-            )
-        }
-
-        Text(
-            text = "Login to your Account",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color(0xD049494A)
-        )
-
-        Spacer(
-            modifier = Modifier
-                .height(35.dp)
-        )
+        HeaderLogin()
 
         LoginForm(viewModel)
-
-        Spacer(
-            modifier = Modifier
-                .height(55.dp)
-        )
 
         Oauth2Form()
 
@@ -105,6 +78,33 @@ fun LoginScreen(
             }
         }
     }
+}
+
+@Composable
+fun HeaderLogin(){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "logo",
+            modifier = Modifier.size(180.dp)
+        )
+    }
+
+    Text(
+        text = "Login to your Account",
+        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Color(0xD049494A)
+    )
+
+    Spacer(
+        modifier = Modifier
+            .height(35.dp)
+    )
 }
 
 @Composable
@@ -171,8 +171,17 @@ fun LoginForm(
             containerColor = Color(0xFF1E319C)
         ),
     ) {
-        Text("Sign in")
+        Text(
+            text = "Sign in",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold
+        )
     }
+
+    Spacer(
+        modifier = Modifier
+            .height(55.dp)
+    )
 }
 
 @Composable

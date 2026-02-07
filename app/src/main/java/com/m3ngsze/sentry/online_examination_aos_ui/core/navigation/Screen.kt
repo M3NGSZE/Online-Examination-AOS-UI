@@ -12,6 +12,8 @@ sealed class Screen(val route: String, val title: String) {
 
     object Signup: Screen("signup_screen", "signup")
 
+    object VerifyOtp: Screen("verify_otp_screen", "verifyOtp")
+
     object Room: Screen("Room_screen", "room")
 
 }

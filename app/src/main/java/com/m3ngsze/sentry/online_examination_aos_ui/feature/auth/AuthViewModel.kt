@@ -37,7 +37,7 @@ class AuthViewModel @Inject constructor(
                 val message = try {
                     val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
                     apiError.message
-                } catch (ex: Exception) {
+                } catch (_: Exception) {
                     "Server error"
                 }
                 errorState = message
