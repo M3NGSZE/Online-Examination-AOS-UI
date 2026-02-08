@@ -154,7 +154,7 @@ fun SignUpForm(
             .height(15.dp)
     )
 
-    val request = RegisterRequest(email, password, firstName, lastName)
+    val request = RegisterRequest(email.trim(), password, firstName, lastName)
 
     if (errorState != null){
         InvalidInput(msg = errorState)
@@ -164,7 +164,6 @@ fun SignUpForm(
                 .height(15.dp)
         )
     }
-
 
     Button(
         onClick = {
