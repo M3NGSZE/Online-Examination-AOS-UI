@@ -8,4 +8,6 @@ interface AuthRepository {
     suspend fun login(email: String, password: String): Auth
 
     suspend fun register(request: RegisterRequest): User
+
+    suspend fun verifyOtp(email: String, otp: String): Boolean
 }

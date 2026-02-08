@@ -9,12 +9,36 @@ import javax.inject.Inject
 class AuthUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
+
+    private val passwordRegex =
+        Regex("^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$")
+
     suspend fun login(
         email: String,
         password: String
     ): Auth{
+        if (!email.contains("@")) throw IllegalArgumentException("Invalid email format")
+        if (password.isBlank()) throw IllegalArgumentException("Password is required")
+
         return  repository.login(email, password)
     }
 
-    suspend fun register(request: RegisterRequest): User = repository.register(request)
+    suspend fun register(request: RegisterRequest): User {
+
+        if (request.firstName.isBlank()) throw IllegalArgumentException("First name is required")
+        if (request.lastName.isBlank()) throw IllegalArgumentException("Last name is required")
+
+        if (!request.email.contains("@")) throw IllegalArgumentException("Invalid email format")
+        if (!passwordRegex.matches(request.password))
+            throw IllegalArgumentException("Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character")
+
+        return repository.register(request)
+    }
+
+    suspend fun verifyOtp(email: String, otp: String): Boolean{
+        if (!email.contains("@")) throw IllegalArgumentException("Invalid email format")
+        if (otp.isBlank()) throw IllegalArgumentException("Password is required")
+
+        return repository.verifyOtp(email, otp)
+    }
 }

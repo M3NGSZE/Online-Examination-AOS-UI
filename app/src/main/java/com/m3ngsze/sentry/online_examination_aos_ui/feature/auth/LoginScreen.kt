@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.m3ngsze.sentry.online_examination_aos_ui.R
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.InvalidInput
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.Oauth2Form
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.PasswordBox
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBox
@@ -113,7 +114,7 @@ fun LoginForm(
 ){
 
     val isClick = false
-    val errorState = viewModel.errorState
+    val errorState: String? = viewModel.errorState
     val border: Long = if (errorState == null && isClick) 0x73FF0000 else 0x73919090
 
     var color by remember { mutableLongStateOf(border) }
@@ -146,12 +147,8 @@ fun LoginForm(
             modifier = Modifier
                 .height(15.dp)
         )
-        Text(
-            text = errorState,
-            color = Color.Red,
-            fontSize = 14.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
+
+        InvalidInput(msg = errorState)
 
         Spacer(
             modifier = Modifier

@@ -28,10 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.InvalidInput
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.Oauth2Form
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.PasswordBox
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBox
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
 
 @Composable
 fun SignUpScreen(
@@ -115,7 +117,7 @@ fun SignUpForm(
     var lastName by remember { mutableStateOf("") }
 
     val isClick = false
-    val errorState = viewModel.errorState
+    val errorState: String? = viewModel.errorState
     val border: Long = if (errorState == null && isClick) 0x73FF0000 else 0x73919090
 
     TextBox(
@@ -143,8 +145,21 @@ fun SignUpForm(
             .height(15.dp)
     )
 
+    val request = RegisterRequest(email, password, firstName, lastName)
+
+    if (errorState != null){
+        InvalidInput(msg = errorState)
+
+        Spacer(
+            modifier = Modifier
+                .height(15.dp)
+        )
+    }
+
+
     Button(
         onClick = {
+            viewModel.register(request)
             navController.navigate(Screen.VerifyOtp.route)
         },
         modifier = Modifier
