@@ -16,7 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun InvalidInput(msg: String?){
@@ -41,8 +43,12 @@ fun InvalidInput(msg: String?){
         )
 
         Text(
-            text = "$msg",
-            color = Color.Red
+            text = """
+            $msg
+            Please try again!
+        """.trimIndent(),
+            color = Color.Red,
+            lineHeight = 20.sp
         )
     }
 }

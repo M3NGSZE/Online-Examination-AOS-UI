@@ -37,7 +37,6 @@ import com.m3ngsze.sentry.online_examination_aos_ui.common.component.InvalidInpu
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.Oauth2Form
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.PasswordBox
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBox
-import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.ROOT_GRAPH_ROUT
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.AUTH_GRAPH_ROUT
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
@@ -74,7 +73,7 @@ fun LoginScreen(
 
     LaunchedEffect(authState) {
         if (authState != null) {
-            navController.navigate(ROOT_GRAPH_ROUT) {
+            navController.navigate(Screen.Room.route) {
                 popUpTo(AUTH_GRAPH_ROUT) { inclusive = true }
             }
         }
@@ -143,10 +142,6 @@ fun LoginForm(
     )
 
     if (errorState != null) {
-        Spacer(
-            modifier = Modifier
-                .height(15.dp)
-        )
 
         InvalidInput(msg = errorState)
 

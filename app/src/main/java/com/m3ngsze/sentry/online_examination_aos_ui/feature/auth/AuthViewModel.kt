@@ -27,6 +27,10 @@ class AuthViewModel @Inject constructor(
     var userState by mutableStateOf<User?>(null)
         private set
 
+    var verifyState by mutableStateOf<Boolean?>(null)
+        private set
+
+
     var errorState by mutableStateOf<String?>(null)
         private set
 
@@ -72,11 +76,11 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun verifyOtp(email: String, otp: String){
+    fun verifyOtp(email: String?, otp: String){
         viewModelScope.launch {
             errorState = null // Clear previous errors
             try {
-                authUseCase.verifyOtp(email, otp)
+                verifyState = authUseCase.verifyOtp(email, otp)
             }catch (e: HttpException) {
 
                 val errorJson = e.response()?.errorBody()?.string()

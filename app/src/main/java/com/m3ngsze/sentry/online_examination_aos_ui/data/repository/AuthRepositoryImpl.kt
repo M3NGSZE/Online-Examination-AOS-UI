@@ -36,7 +36,7 @@ class AuthRepositoryImpl @Inject constructor(
         return response.payload.toDomain()
     }
 
-    override suspend fun verifyOtp(email: String, otp: String): Boolean {
+    override suspend fun verifyOtp(email: String?, otp: String): Boolean {
         val response = api.verifyOtp(OtpRequest(email, otp))
 
         if (response.status != "201 CREATED")

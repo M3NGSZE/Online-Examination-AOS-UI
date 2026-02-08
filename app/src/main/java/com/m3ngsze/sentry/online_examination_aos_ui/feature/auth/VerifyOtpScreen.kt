@@ -2,6 +2,7 @@ package com.m3ngsze.sentry.online_examination_aos_ui.feature.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,12 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,8 +41,9 @@ import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
 @Composable
 fun VerifyOtpScreen(
-    navController : NavHostController,
-    viewModel: AuthViewModel = hiltViewModel()
+    navController: NavHostController,
+    viewModel: AuthViewModel = hiltViewModel(),
+    email: String?
 ){
     Column (
         modifier = Modifier
@@ -51,10 +54,18 @@ fun VerifyOtpScreen(
         HeaderOtp(navController = navController)
 
         OtpForm(
-            navController = navController,
-            viewModel = viewModel
+            viewModel = viewModel,
+            email = email
         )
     }
+
+    val verifyState = viewModel.verifyState
+    LaunchedEffect(verifyState) {
+        if (verifyState !=null){
+            navController.navigate(Screen.Login.route)
+        }
+    }
+
 }
 
 @Composable
@@ -63,12 +74,12 @@ fun HeaderOtp(navController: NavHostController){
     Box (
         modifier = Modifier
             .padding(vertical = 3.dp)
-//            .clickable{
-//                navController.navigate(Screen.Signup.route)
-//            }
+            .clickable{
+                navController.navigate(Screen.Signup.route)
+            }
     ){
         Icon(
-            imageVector = Icons.Default.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back to register",
             tint = Color.Black
         )
@@ -125,8 +136,8 @@ fun HeaderOtp(navController: NavHostController){
 
 @Composable
 fun OtpForm(
-    navController : NavHostController,
-    viewModel: AuthViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel(),
+    email: String?
 ){
     val otpList = remember {
         mutableStateListOf("", "", "", "", "", "")
@@ -159,7 +170,7 @@ fun OtpForm(
 
     Button(
         onClick = {
-            navController.navigate(Screen.Login.route)
+            viewModel.verifyOtp(email, otpCode)
         },
         modifier = Modifier
             .fillMaxWidth()

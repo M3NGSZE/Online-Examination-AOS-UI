@@ -35,8 +35,8 @@ class AuthUseCase @Inject constructor(
         return repository.register(request)
     }
 
-    suspend fun verifyOtp(email: String, otp: String): Boolean{
-        if (!email.contains("@")) throw IllegalArgumentException("Invalid email format")
+    suspend fun verifyOtp(email: String?, otp: String): Boolean{
+        email?.contains("@")?.let { if (!it) throw IllegalArgumentException("Invalid email format") }
         if (otp.isBlank()) throw IllegalArgumentException("Password is required")
 
         return repository.verifyOtp(email, otp)

@@ -9,5 +9,5 @@ interface AuthRepository {
 
     suspend fun register(request: RegisterRequest): User
 
-    suspend fun verifyOtp(email: String, otp: String): Boolean
+    suspend fun verifyOtp(email: String?, otp: String): Boolean
 }

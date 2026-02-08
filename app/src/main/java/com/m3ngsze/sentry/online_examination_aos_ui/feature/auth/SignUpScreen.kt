@@ -10,12 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,25 +41,32 @@ fun SignUpScreen(
     navController : NavHostController,
     viewModel: AuthViewModel = hiltViewModel()
 ){
+    var email by remember { mutableStateOf("") }
+
     Column (
         modifier = Modifier
             .padding(start = 25.dp, bottom = 25.dp, end = 25.dp)
             .background(Color(0xFFFCFCFC))
             .fillMaxWidth()
     ) {
-        SignUpHeader(navController = navController,)
+        SignUpHeader(navController = navController)
 
-        SignUpForm(
-            navController = navController,
-            viewModel = viewModel
-        )
+        SignUpForm(viewModel = viewModel){email = it}
 
         Oauth2Form()
+    }
+
+    val userState = viewModel.userState
+
+    LaunchedEffect(userState) {
+        if (userState != null){
+            navController.navigate(Screen.VerifyOtp.createRoute(email))
+        }
     }
 }
 
 @Composable
-fun SignUpHeader(navController : NavHostController,){
+fun SignUpHeader(navController : NavHostController){
     Box (
         modifier = Modifier
             .padding(vertical = 3.dp)
@@ -67,7 +75,7 @@ fun SignUpHeader(navController : NavHostController,){
                 }
     ){
         Icon(
-            imageVector = Icons.Default.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back to login",
             tint = Color.Black
         )
@@ -107,8 +115,8 @@ fun SignUpHeader(navController : NavHostController,){
 
 @Composable
 fun SignUpForm(
-    navController : NavHostController,
-    viewModel: AuthViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel(),
+    getValue: (String) -> Unit
 ){
 
     var email by remember { mutableStateOf("") }
@@ -160,7 +168,6 @@ fun SignUpForm(
     Button(
         onClick = {
             viewModel.register(request)
-            navController.navigate(Screen.VerifyOtp.route)
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -176,6 +183,8 @@ fun SignUpForm(
             fontWeight = FontWeight.SemiBold
         )
     }
+
+    getValue(email)
 
     Spacer(
         modifier = Modifier
