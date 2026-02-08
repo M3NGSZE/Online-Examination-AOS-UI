@@ -124,28 +124,29 @@ fun SignUpForm(
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
 
-    val isClick = false
     val errorState: String? = viewModel.errorState
-    val border: Long = if (errorState == null && isClick) 0x73FF0000 else 0x73919090
+    val borderColor by remember(errorState) {
+        mutableStateOf(if (errorState != null) Color(0x73FF0000) else Color(0x73919090))
+    }
 
     TextBox(
         label = "first name",
-        outline = border
+        outline = borderColor
     ) { firstName = it}
 
     TextBox(
         label = "last name",
-        outline = border
+        outline = borderColor
     ) { lastName = it}
 
     TextBox(
         label = "email",
-        outline = border
+        outline = borderColor
     ) { email = it}
 
     PasswordBox (
         label = "password",
-        outline = border
+        outline = borderColor
     ) { password = it}
 
     Spacer(

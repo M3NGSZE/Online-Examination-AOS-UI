@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TextBox(
     label: String,
-    outline: Long,
+    outline: Color,
     getValue: (String) -> Unit
 ){
     var x by remember { mutableStateOf("") }
@@ -43,7 +43,7 @@ fun TextBox(
             unfocusedContainerColor = Color.Transparent,
             focusedContainerColor = Color.Transparent,
             focusedIndicatorColor = Color(0xFF305EAF),
-            unfocusedIndicatorColor = Color(outline)
+            unfocusedIndicatorColor = outline
         ),
         singleLine = true,
         textStyle = TextStyle(

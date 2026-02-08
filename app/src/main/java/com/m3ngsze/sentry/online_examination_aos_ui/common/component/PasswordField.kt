@@ -27,7 +27,11 @@ import androidx.compose.ui.unit.sp
 import com.m3ngsze.sentry.online_examination_aos_ui.R
 
 @Composable
-fun PasswordBox(label: String, outline: Long, getValue: (String) -> Unit){
+fun PasswordBox(
+    label: String,
+    outline: Color,
+    getValue: (String) -> Unit
+){
     var x by remember { mutableStateOf("") }
     getValue(x)
 
@@ -49,7 +53,7 @@ fun PasswordBox(label: String, outline: Long, getValue: (String) -> Unit){
             unfocusedContainerColor = Color.Transparent,
             focusedContainerColor = Color.Transparent,
             focusedIndicatorColor = Color(0xFF305EAF),
-            unfocusedIndicatorColor = Color(outline)
+            unfocusedIndicatorColor = outline
         ),
         singleLine = true,
         textStyle = TextStyle(

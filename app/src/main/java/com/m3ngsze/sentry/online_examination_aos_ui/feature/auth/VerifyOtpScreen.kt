@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.m3ngsze.sentry.online_examination_aos_ui.R
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.InvalidInput
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SmallTextField
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
@@ -192,6 +193,15 @@ fun OtpForm(
         modifier = Modifier
             .height(15.dp)
     )
+
+    if (viewModel.errorState != null) {
+        InvalidInput(msg = viewModel.errorState!!)
+
+        Spacer(
+            modifier = Modifier
+                .height(25.dp)
+        )
+    }
 
     Button(
         onClick = {},

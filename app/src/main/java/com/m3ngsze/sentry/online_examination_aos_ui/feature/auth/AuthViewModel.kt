@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.response.ApiErrorResponse
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
@@ -36,64 +37,31 @@ class AuthViewModel @Inject constructor(
 
     fun login(email: String, password: String){
         viewModelScope.launch {
-            errorState = null // Clear previous errors
-            try {
-                authState = authUseCase.login(email, password)
-            }catch (e: HttpException) {
-
-                val errorJson = e.response()?.errorBody()?.string()
-
-                val message = try {
-                    val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
-                    apiError.message
-                } catch (_: Exception) {
-                    "Server error"
-                }
-                errorState = message
+            errorState = null
+            when (val result = authUseCase.login(email, password)) {
+                is AppResult.Success -> authState = result.data
+                is AppResult.Error -> errorState = result.message
             }
-
         }
     }
 
     fun register(request: RegisterRequest){
         viewModelScope.launch {
-            errorState = null // Clear previous errors
-            try {
-                userState = authUseCase.register(request)
-            }catch (e: HttpException) {
-
-                val errorJson = e.response()?.errorBody()?.string()
-
-                val message = try {
-                    val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
-                    apiError.message
-                } catch (_: Exception) {
-                    "Server error"
-                }
-                errorState = message
+            errorState = null
+            when (val result = authUseCase.register(request)) {
+                is AppResult.Success -> userState = result.data
+                is AppResult.Error -> errorState = result.message
             }
-
         }
     }
 
     fun verifyOtp(email: String?, otp: String){
         viewModelScope.launch {
-            errorState = null // Clear previous errors
-            try {
-                verifyState = authUseCase.verifyOtp(email, otp)
-            }catch (e: HttpException) {
-
-                val errorJson = e.response()?.errorBody()?.string()
-
-                val message = try {
-                    val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
-                    apiError.message
-                } catch (_: Exception) {
-                    "Server error"
-                }
-                errorState = message
+            errorState = null
+            when (val result = authUseCase.verifyOtp(email, otp)) {
+                is AppResult.Success -> verifyState = result.data
+                is AppResult.Error -> errorState = result.message
             }
-
         }
     }
 }

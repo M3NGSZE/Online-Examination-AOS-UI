@@ -112,18 +112,19 @@ fun LoginForm(
     viewModel: AuthViewModel = hiltViewModel()
 ){
 
-    val isClick = false
     val errorState: String? = viewModel.errorState
-    val border: Long = if (errorState == null && isClick) 0x73FF0000 else 0x73919090
 
-    var color by remember { mutableLongStateOf(border) }
+    val borderColor by remember(errorState) {
+        mutableStateOf(if (errorState != null) Color(0x73FF0000) else Color(0x73919090))
+    }
+
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     TextBox(
         label = "email",
-        outline = color
+        outline = borderColor
     ) { e -> email = e }
 
     Spacer(
@@ -133,7 +134,7 @@ fun LoginForm(
 
     PasswordBox(
         label = "password",
-        outline = color
+        outline = borderColor
     ) { p -> password = p }
 
     Spacer(
@@ -142,8 +143,7 @@ fun LoginForm(
     )
 
     if (errorState != null) {
-
-        InvalidInput(msg = errorState)
+        InvalidInput(msg = viewModel.errorState!!)
 
         Spacer(
             modifier = Modifier
