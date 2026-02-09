@@ -1,5 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase
 
+import android.util.Patterns
 import com.google.gson.Gson
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
@@ -46,14 +47,23 @@ class AuthUseCase @Inject constructor(
         if (request.firstName.isBlank()) return AppResult.Error("First name is required")
         if (request.lastName.isBlank()) return AppResult.Error("Last name is required")
 
-        if (!request.email.contains("@")) return AppResult.Error("Invalid email format")
+        if (!Patterns.EMAIL_ADDRESS.matcher(request.email).matches())
+            return AppResult.Error("Invalid email format")
         if (!passwordRegex.matches(request.password))
             return AppResult.Error("Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character")
 
         return try {
             val user = repository.register(request)
+
+            try {
+                repository.sendOtp(request.email)
+            } catch (e: Exception) {
+                println("OTP sending failed: ${e.message}")
+            }
+
             AppResult.Success(user)
         } catch (e: HttpException) {
+
             val errorJson = e.response()?.errorBody()?.string()
             val message = try {
                 val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
@@ -87,4 +97,5 @@ class AuthUseCase @Inject constructor(
             AppResult.Error("Unexpected error: ${e.message}")
         }
     }
+
 }

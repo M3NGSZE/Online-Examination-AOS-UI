@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,12 +68,10 @@ fun SmallTextField(
     getValue(x)
 
     OutlinedTextField(
-        modifier = Modifier
-            .width(w)
-            .height(h)
-            .padding(horizontal = 5.dp),
         value = x,
-        onValueChange = {x = it},
+        onValueChange = {
+            if (it.length <= 1) x = it
+        },
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Color.Transparent,
             focusedContainerColor = Color.Transparent,
@@ -80,11 +80,16 @@ fun SmallTextField(
         ),
         singleLine = true,
         textStyle = TextStyle(
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            textAlign = TextAlign.Center
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
-        )
+        ),
+        modifier = Modifier
+            .width(w)
+            .height(h)
+            .padding(horizontal = 5.dp)
     )
 }

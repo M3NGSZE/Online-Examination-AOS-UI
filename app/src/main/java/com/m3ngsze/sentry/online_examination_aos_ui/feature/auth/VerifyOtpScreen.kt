@@ -62,7 +62,7 @@ fun VerifyOtpScreen(
 
     val verifyState = viewModel.verifyState
     LaunchedEffect(verifyState) {
-        if (verifyState !=null){
+        if (verifyState == true){
             navController.navigate(Screen.Login.route)
         }
     }
@@ -217,7 +217,11 @@ fun OtpForm(
             color = Color.Black,
             style = TextStyle(
                 textDecoration = TextDecoration.Underline
-            )
+            ),
+            modifier = Modifier
+//                .clickable{
+//                    viewModel.se
+//                }
         )
     }
 
