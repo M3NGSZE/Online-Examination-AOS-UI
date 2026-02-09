@@ -62,4 +62,14 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun sendOtp(email: String?){
+        viewModelScope.launch {
+            errorState = null
+            when (val result = authUseCase.sendOtp(email)) {
+                is AppResult.Success -> verifyState = result.data
+                is AppResult.Error -> errorState = result.message
+            }
+        }
+    }
+
 }

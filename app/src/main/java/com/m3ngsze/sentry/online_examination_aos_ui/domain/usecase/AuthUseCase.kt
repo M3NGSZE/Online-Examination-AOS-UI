@@ -1,14 +1,12 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase
 
 import android.util.Patterns
-import com.google.gson.Gson
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
+import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.safeApiCall
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.response.ApiErrorResponse
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class AuthUseCase @Inject constructor(
@@ -25,21 +23,7 @@ class AuthUseCase @Inject constructor(
         if (!email.contains("@")) return AppResult.Error("Invalid email format")
         if (password.isBlank()) return AppResult.Error("Password is required")
 
-        return try {
-            val auth = repository.login(email, password)
-            AppResult.Success(auth)
-        } catch (e: HttpException) {
-            val errorJson = e.response()?.errorBody()?.string()
-            val message = try {
-                val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
-                apiError.message
-            } catch (_: Exception) {
-                "Server error"
-            }
-            AppResult.Error(message)
-        } catch (e: Exception) {
-            AppResult.Error("Unexpected error: ${e.message}")
-        }
+        return safeApiCall { repository.login(email, password) }
     }
 
     suspend fun register(request: RegisterRequest): AppResult<User> {
@@ -52,28 +36,17 @@ class AuthUseCase @Inject constructor(
         if (!passwordRegex.matches(request.password))
             return AppResult.Error("Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character")
 
-        return try {
+        return safeApiCall {
             val user = repository.register(request)
 
+            // OTP sending is optional; failure won't block registration
             try {
                 repository.sendOtp(request.email)
             } catch (e: Exception) {
                 println("OTP sending failed: ${e.message}")
             }
 
-            AppResult.Success(user)
-        } catch (e: HttpException) {
-
-            val errorJson = e.response()?.errorBody()?.string()
-            val message = try {
-                val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
-                apiError.message
-            } catch (_: Exception) {
-                "Server error"
-            }
-            AppResult.Error(message)
-        } catch (e: Exception) {
-            AppResult.Error("Unexpected error: ${e.message}")
+            user
         }
     }
 
@@ -81,21 +54,13 @@ class AuthUseCase @Inject constructor(
         email?.contains("@")?.let { if (!it) return AppResult.Error("Invalid email format") }
         if (otp.isBlank()) return AppResult.Error("Password is required")
 
-        return try {
-            val verify = repository.verifyOtp(email, otp)
-            AppResult.Success(verify)
-        } catch (e: HttpException) {
-            val errorJson = e.response()?.errorBody()?.string()
-            val message = try {
-                val apiError = Gson().fromJson(errorJson, ApiErrorResponse::class.java)
-                apiError.message
-            } catch (_: Exception) {
-                "Server error"
-            }
-            AppResult.Error(message)
-        } catch (e: Exception) {
-            AppResult.Error("Unexpected error: ${e.message}")
-        }
+        return safeApiCall { repository.verifyOtp(email, otp) }
+    }
+
+    suspend fun sendOtp(email: String?): AppResult<Boolean>{
+        email?.contains("@")?.let { if (!it) return AppResult.Error("Invalid email format") }
+
+        return safeApiCall { repository.sendOtp(email) }
     }
 
 }

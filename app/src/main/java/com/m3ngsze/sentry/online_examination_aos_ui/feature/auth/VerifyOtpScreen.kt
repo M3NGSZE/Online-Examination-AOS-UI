@@ -63,7 +63,9 @@ fun VerifyOtpScreen(
     val verifyState = viewModel.verifyState
     LaunchedEffect(verifyState) {
         if (verifyState == true){
-            navController.navigate(Screen.Login.route)
+            navController.navigate(Screen.Login.route){
+                popUpTo (Screen.VerifyOtp.route){ inclusive = true  }
+            }
         }
     }
 
@@ -219,9 +221,9 @@ fun OtpForm(
                 textDecoration = TextDecoration.Underline
             ),
             modifier = Modifier
-//                .clickable{
-//                    viewModel.se
-//                }
+                .clickable{
+                    viewModel.sendOtp(email?.trim())
+                }
         )
     }
 
