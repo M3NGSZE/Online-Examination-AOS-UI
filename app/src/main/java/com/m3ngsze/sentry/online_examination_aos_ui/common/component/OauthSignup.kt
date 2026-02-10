@@ -1,7 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.common.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,9 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItem
 import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItemList
 
@@ -71,8 +70,8 @@ fun AuthItemRender(item: AuthItem){
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(item.img),
+            AsyncImage(
+                model = item.img,
                 contentDescription = item.name,
                 modifier = Modifier.size(item.size)
             )
