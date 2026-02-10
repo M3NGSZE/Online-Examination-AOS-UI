@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
+import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authUseCase: AuthUseCase
+    private val authUseCase: AuthUseCase,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     var authState by mutableStateOf<Auth?>(null)

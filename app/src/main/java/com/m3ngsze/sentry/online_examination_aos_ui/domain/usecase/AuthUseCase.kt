@@ -3,6 +3,7 @@ package com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase
 import android.util.Patterns
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.safeApiCall
+import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
@@ -10,7 +11,8 @@ import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthReposi
 import javax.inject.Inject
 
 class AuthUseCase @Inject constructor(
-    private val repository: AuthRepository
+    private val repository: AuthRepository,
+    private val sessionManager: SessionManager
 ) {
 
     private val passwordRegex =
@@ -23,7 +25,13 @@ class AuthUseCase @Inject constructor(
         if (!email.contains("@")) return AppResult.Error("Invalid email format")
         if (password.isBlank()) return AppResult.Error("Password is required")
 
-        return safeApiCall { repository.login(email, password) }
+        return safeApiCall {
+            val login = repository.login(email, password)
+
+            sessionManager.saveAuthToken(login.accessToken)
+
+            login
+        }
     }
 
     suspend fun register(request: RegisterRequest): AppResult<User> {

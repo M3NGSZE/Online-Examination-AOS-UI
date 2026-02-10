@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
@@ -18,12 +19,24 @@ import com.m3ngsze.sentry.online_examination_aos_ui.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController){
+fun SplashScreen(
+    navController: NavHostController,
+    viewModel: SplashViewModel  = hiltViewModel(),
+){
 
     LaunchedEffect (Unit){
         delay(2000)
-        navController.navigate(Screen.Login.route){
-            popUpTo (Screen.Splash.route){ inclusive = true }
+
+        val loggedIn = viewModel.isLoggedIn()
+
+        if (loggedIn) {
+            navController.navigate(Screen.Room.route) {
+                popUpTo(Screen.Splash.route) { inclusive = true }
+            }
+        } else {
+            navController.navigate(Screen.Login.route) {
+                popUpTo(Screen.Splash.route) { inclusive = true }
+            }
         }
     }
 

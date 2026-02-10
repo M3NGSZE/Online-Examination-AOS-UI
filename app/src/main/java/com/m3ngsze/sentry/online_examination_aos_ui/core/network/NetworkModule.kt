@@ -1,10 +1,13 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.core.network
 
+import android.content.Context
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.ApiConstants
+import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.AuthApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -42,4 +45,12 @@ object NetworkModule {
         retrofit: Retrofit
     ): AuthApiService =
         retrofit.create(AuthApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideSessionManager(
+        @ApplicationContext context: Context
+    ): SessionManager {
+        return SessionManager(context)
+    }
 }

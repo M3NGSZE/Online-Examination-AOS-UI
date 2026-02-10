@@ -61,6 +61,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     implementation("androidx.core:core-splashscreen:1.0.1")
