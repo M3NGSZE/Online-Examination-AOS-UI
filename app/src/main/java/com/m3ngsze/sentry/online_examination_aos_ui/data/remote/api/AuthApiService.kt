@@ -1,11 +1,11 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api
 
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.dto.AuthDTO
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.dto.UserDTO
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.AuthRequest
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.OtpRequest
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.response.ApiResponse
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.dto.AuthDTO
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.dto.UserDTO
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.AuthRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.OtpRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -30,4 +30,10 @@ interface AuthApiService {
     suspend fun sendOtp(
         @Query("email") email: String?
     ): ApiResponse<Boolean>
+
+    @POST("/api/v1/auths/refresh")
+    suspend fun refreshToken(
+        @Query("refreshToken") refreshToken: String?
+    ): ApiResponse<AuthDTO>
+
 }

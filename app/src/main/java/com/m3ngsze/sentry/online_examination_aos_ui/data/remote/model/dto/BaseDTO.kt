@@ -1,4 +1,4 @@
-package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.dto
+package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.dto
 
 import java.time.LocalDateTime
 

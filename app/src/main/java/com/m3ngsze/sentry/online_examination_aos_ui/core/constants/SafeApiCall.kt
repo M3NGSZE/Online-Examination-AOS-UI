@@ -1,7 +1,7 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.core.constants
 
 import com.google.gson.Gson
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.response.ApiErrorResponse
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.ApiErrorResponse
 import retrofit2.HttpException
 
 suspend fun <T> safeApiCall(apiCall: suspend () -> T): AppResult<T> {

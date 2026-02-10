@@ -15,18 +15,28 @@ class SessionManager @Inject constructor(
 )  {
 
     companion object {
-        val KEY_AUTH_TOKEN = stringPreferencesKey("auth_token")
+        val KEY_ACCESS_TOKEN = stringPreferencesKey("access_token")
+        val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
     }
 
-    suspend fun saveAuthToken(token: String) {
+    suspend fun saveTokens(
+        access: String,
+        refresh: String
+    ) {
         context.dataStore.edit { prefs ->
-            prefs[KEY_AUTH_TOKEN] = token
+            prefs[KEY_ACCESS_TOKEN] = access
+            prefs[KEY_REFRESH_TOKEN] = refresh
         }
     }
 
-    suspend fun getAuthToken(): String? {
+    suspend fun getAccessToken(): String? {
         val prefs = context.dataStore.data.first()
-        return prefs[KEY_AUTH_TOKEN]
+        return prefs[KEY_ACCESS_TOKEN]
+    }
+
+    suspend fun getRefreshToken(): String? {
+        val prefs = context.dataStore.data.first()
+        return prefs[KEY_REFRESH_TOKEN]
     }
 
     suspend fun clearSession() {

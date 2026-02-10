@@ -34,7 +34,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.common.component.Oauth2Form
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.PasswordBox
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBox
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
 
 @Composable
 fun SignUpScreen(

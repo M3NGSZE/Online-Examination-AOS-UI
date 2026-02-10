@@ -1,6 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.data.mapper
 
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.dto.UserDTO
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.dto.UserDTO
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import java.util.UUID
 

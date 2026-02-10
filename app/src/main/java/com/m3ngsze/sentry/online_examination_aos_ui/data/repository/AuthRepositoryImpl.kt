@@ -4,9 +4,9 @@ import android.util.Log
 import com.google.gson.Gson
 import com.m3ngsze.sentry.online_examination_aos_ui.data.mapper.toDomain
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.AuthApiService
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.AuthRequest
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.OtpRequest
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.AuthRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.OtpRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
@@ -53,10 +53,19 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun sendOtp(email: String?): Boolean {
         val response = api.sendOtp(email)
 
-        if (response.status != "201 CREATED")
+        if (response.status != "200 OK")
             throw Exception(response.message)
 
         return true
+    }
+
+    override suspend fun refreshToken(refreshToken: String): Auth {
+        val response = api.refreshToken(refreshToken)
+
+        if (response.status != "200 OK")
+            throw Exception(response.message)
+
+        return response.payload.toDomain()
     }
 
 }

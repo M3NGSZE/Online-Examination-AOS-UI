@@ -11,7 +11,8 @@ class SplashViewModel  @Inject constructor(
 ) : ViewModel(){
 
     suspend fun isLoggedIn(): Boolean {
-        return sessionManager.getAuthToken() != null
+        val token = sessionManager.getAccessToken()
+        return !token.isNullOrEmpty()
     }
 
 }

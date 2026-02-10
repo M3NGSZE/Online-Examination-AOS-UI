@@ -4,7 +4,7 @@ import android.util.Patterns
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.safeApiCall
 import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
@@ -28,7 +28,7 @@ class AuthUseCase @Inject constructor(
         return safeApiCall {
             val login = repository.login(email, password)
 
-            sessionManager.saveAuthToken(login.accessToken)
+            sessionManager.saveTokens(login.accessToken, login.refreshToken)
 
             login
         }

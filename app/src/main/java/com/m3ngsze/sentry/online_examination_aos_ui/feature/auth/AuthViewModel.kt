@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
-import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.request.RegisterRequest
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase.AuthUseCase

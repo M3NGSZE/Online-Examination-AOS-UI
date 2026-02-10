@@ -1,4 +1,4 @@
-package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.response
+package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response
 
 data class ApiResponse <T> (
     val message: String,
