@@ -1,6 +1,8 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,13 +15,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.NotificationsNone
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,20 +67,20 @@ fun HeaderRoom(
     viewModel: ProfileViewModel  = hiltViewModel()
 ){
     val user = viewModel.userState
+    var expanded by remember { mutableStateOf(false) }
 
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(40.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-    ){
-        Row (
-            modifier = Modifier
-                .fillMaxHeight(),
-            horizontalArrangement = Arrangement.Start,
+    ) {
+
+        Row(
+            modifier = Modifier.fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = "Exam",
                 fontSize = 23.sp,
@@ -84,43 +90,69 @@ fun HeaderRoom(
 
             Text(
                 text = " Pilot",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontSize = 19.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color(0xFFF78203)
             )
         }
 
-
-        Row (
-            horizontalArrangement = Arrangement.SpaceBetween,
+        Row(
             verticalAlignment = Alignment.CenterVertically
-        ){
-            Box (
-                modifier = Modifier
-                    .size(40.dp)
-                    .background(
-                        Color.Gray,
-                        shape = CircleShape
-                    )
-            ){
-                AsyncImage(
-                    model = user?.profileUrl ?: R.drawable.profile,
-                    contentDescription = "profile img",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape)
-                )
-            }
+        ) {
 
-            Box {
-                Icon(
-                    imageVector = Icons.Default.NotificationsNone,
-                    contentDescription = "",
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+
+                Box(
                     modifier = Modifier
-                        .padding(start = 15.dp)
-                        .size(25.dp)
-                )
+                        .size(40.dp)
+                        .background(Color.Gray, CircleShape)
+                        .clickable {
+                            expanded = !expanded
+                        }
+                ) {
+                    AsyncImage(
+                        model = user?.profileUrl
+                            ?: R.drawable.profile,
+                        contentDescription = "profile img",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    )
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+
+                    DropdownMenuItem(
+                        text = { Text("Profile") },
+                        onClick = {
+                            expanded = false
+                            navController.navigate("profile")
+                        }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text("Setting") },
+                        onClick = { expanded = false }
+                    )
+
+                    DropdownMenuItem(
+                        text = { Text("Logout") },
+                        onClick = { expanded = false }
+                    )
+                }
             }
+            Icon(
+                imageVector = Icons.Default.NotificationsNone,
+                contentDescription = "Notification",
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .size(25.dp)
+            )
         }
     }
 }
