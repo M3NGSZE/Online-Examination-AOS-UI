@@ -1,8 +1,10 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.core.network
 
 import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.AuthRepositoryImpl
+import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.RefreshTokenRepositoryImpl
 import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.UserRepositoryImpl
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.RefreshTokenRepository
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -13,6 +15,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindRefreshTokenRepository(
+        impl: RefreshTokenRepositoryImpl
+    ): RefreshTokenRepository
 
     @Binds
     @Singleton

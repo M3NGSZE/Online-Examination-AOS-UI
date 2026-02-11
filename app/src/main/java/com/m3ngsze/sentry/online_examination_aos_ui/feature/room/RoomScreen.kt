@@ -1,5 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,8 +18,10 @@ import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,6 +37,11 @@ fun RoomScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel()
 ){
+
+    LaunchedEffect (Unit) {
+        viewModel.getUserProfile()
+    }
+
     Column (
         modifier = Modifier
             .padding(start = 40.dp, bottom = 25.dp, end = 25.dp)
@@ -44,6 +52,8 @@ fun RoomScreen(
             viewModel = viewModel
         )
     }
+
+//    Log.d("ProfileViewModel", "userState = ${viewModel.userState}")
 }
 
 @Composable
@@ -51,6 +61,8 @@ fun HeaderRoom(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel()
 ){
+    val user = viewModel.userState
+
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -84,16 +96,18 @@ fun HeaderRoom(
         ){
             Box (
                 modifier = Modifier
-                    .size(35.dp)
+                    .size(40.dp)
                     .background(
                         Color.Gray,
                         shape = CircleShape
                     )
             ){
                 AsyncImage(
-                    model = viewModel.userState!!.profileUrl ?: R.drawable.profile,
+                    model = user?.profileUrl ?: R.drawable.profile,
                     contentDescription = "profile img",
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(CircleShape)
                 )
             }
 
