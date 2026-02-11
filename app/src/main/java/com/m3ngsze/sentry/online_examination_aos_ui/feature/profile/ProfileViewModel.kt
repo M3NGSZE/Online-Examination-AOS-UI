@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase.UserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ): ViewModel() {

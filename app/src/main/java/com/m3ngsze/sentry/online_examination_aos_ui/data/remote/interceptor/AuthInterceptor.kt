@@ -1,5 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.interceptor
 
+import android.util.Log
 import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -14,7 +15,7 @@ class AuthInterceptor @Inject constructor(
     private val skipEndpoints = listOf(
         "/auths/login",
         "/auths/register",
-        "/auths/refresh",
+        "/auths/refresh-token",
         "/auths/verify-otp",
         "/auths/resend-otp",
         "/auths/forgot-password",
@@ -29,7 +30,11 @@ class AuthInterceptor @Inject constructor(
         val path = originalRequest.url.encodedPath
 
         // Check if request should skip token
-        val shouldSkip = skipEndpoints.any { path.contains(it) }
+
+        val shouldSkip = skipEndpoints.any { path.endsWith(it) }
+
+        Log.d("path", "encodedPath = $path")
+        Log.d("shouldSkip", "$shouldSkip")
 
         if (!shouldSkip) {
             val token = runBlocking {

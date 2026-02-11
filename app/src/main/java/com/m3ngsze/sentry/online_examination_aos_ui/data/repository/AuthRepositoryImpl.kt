@@ -59,13 +59,4 @@ class AuthRepositoryImpl @Inject constructor(
         return true
     }
 
-    override suspend fun refreshToken(refreshToken: String): Auth {
-        val response = api.refreshToken(refreshToken)
-
-        if (response.status != "200 OK")
-            throw Exception(response.message)
-
-        return response.payload.toDomain()
-    }
-
 }

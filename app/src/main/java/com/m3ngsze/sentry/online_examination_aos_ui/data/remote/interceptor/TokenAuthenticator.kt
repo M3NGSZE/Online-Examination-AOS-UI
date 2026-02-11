@@ -1,7 +1,7 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.interceptor
 
 import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
-import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.RefreshTokenRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
     private val sessionManager: SessionManager,
-    private val repository: AuthRepository
+    private val repository: RefreshTokenRepository
 ) : Authenticator {
 
     // Endpoints that should NOT trigger refresh
     private val skipEndpoints = listOf(
         "/auths/login",
         "/auths/register",
-        "/auths/refresh",
+        "/auths/refresh-token",
         "/auths/verify-otp",
         "/auths/resend-otp",
         "/auths/forgot-password",

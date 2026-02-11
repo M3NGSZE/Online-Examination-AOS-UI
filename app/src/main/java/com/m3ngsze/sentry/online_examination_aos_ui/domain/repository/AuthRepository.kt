@@ -11,6 +11,4 @@ interface AuthRepository {
     suspend fun verifyOtp(email: String?, otp: String): Boolean
 
     suspend fun sendOtp(email: String?): Boolean
-
-    suspend fun refreshToken(refreshToken: String): Auth
 }

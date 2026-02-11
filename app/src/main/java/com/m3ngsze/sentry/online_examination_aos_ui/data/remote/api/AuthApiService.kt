@@ -11,29 +11,24 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface AuthApiService {
-    @POST("/auths/login")
+    @POST("auths/login")
     suspend fun login(
         @Body request: AuthRequest
     ): ApiResponse<AuthDTO>
 
-    @POST("/auths/register")
+    @POST("auths/register")
     suspend fun register(
         @Body request: RegisterRequest
     ): ApiResponse<UserDTO>
 
-    @POST("/auths/verify-otp")
+    @POST("auths/verify-otp")
     suspend fun verifyOtp(
         @Body request: OtpRequest
     ): ApiResponse<Boolean>
 
-    @POST("/auths/resend-otp")
+    @POST("auths/resend-otp")
     suspend fun sendOtp(
         @Query("email") email: String?
     ): ApiResponse<Boolean>
-
-    @POST("/auths/refresh")
-    suspend fun refreshToken(
-        @Query("refreshToken") refreshToken: String?
-    ): ApiResponse<AuthDTO>
 
 }

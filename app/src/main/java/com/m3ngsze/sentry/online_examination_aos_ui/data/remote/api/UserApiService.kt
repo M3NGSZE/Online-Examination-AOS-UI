@@ -5,6 +5,6 @@ import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.A
 import retrofit2.http.GET
 
 interface UserApiService {
-    @GET("/user-profile")
+    @GET("users/user-profile")
     suspend fun getUserProfile() : ApiResponse<UserDTO>
 }
