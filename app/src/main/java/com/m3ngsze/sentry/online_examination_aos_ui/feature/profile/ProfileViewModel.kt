@@ -29,11 +29,11 @@ class ProfileViewModel @Inject constructor(
             when (val result = userUseCase.getUserProfile()){
                 is AppResult.Success -> {
                     userState = result.data
-                    Log.d("ProfileViewModel", "userState after fetch = $userState")
+//                    Log.d("ProfileViewModel", "userState after fetch = $userState")
                 }
                 is AppResult.Error -> {
                     errorState = result.message
-                    Log.d("ProfileViewModel", "Error fetching user: $errorState")
+//                    Log.d("ProfileViewModel", "Error fetching user: $errorState")
                 }
             }
         }

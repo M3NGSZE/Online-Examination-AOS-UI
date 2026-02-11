@@ -1,6 +1,5 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,8 +53,6 @@ fun RoomScreen(
             viewModel = viewModel
         )
     }
-
-//    Log.d("ProfileViewModel", "userState = ${viewModel.userState}")
 }
 
 @Composable
@@ -78,14 +77,16 @@ fun HeaderRoom(
         ){
             Text(
                 text = "Exam",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
+                fontSize = 23.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF006FB7)
             )
 
             Text(
-                text = "  Pilot",
+                text = " Pilot",
                 fontSize = 18.sp,
-                color = Color(0xD049494A)
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFFF78203)
             )
         }
 
@@ -113,11 +114,11 @@ fun HeaderRoom(
 
             Box {
                 Icon(
-                    imageVector = Icons.Default.MoreHoriz,
+                    imageVector = Icons.Default.NotificationsNone,
                     contentDescription = "",
                     modifier = Modifier
                         .padding(start = 15.dp)
-                        .size(20.dp)
+                        .size(25.dp)
                 )
             }
         }

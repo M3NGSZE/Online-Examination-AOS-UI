@@ -1,6 +1,5 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.data.repository
 
-import android.util.Log
 import com.m3ngsze.sentry.online_examination_aos_ui.data.mapper.toDomain
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.UserApiService
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
@@ -13,7 +12,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserProfile(): User {
         val response =  api.getUserProfile()
-        Log.d("UserRepository", "API response: $response")
         if (response.status != "200 OK")
             throw Exception(response.message)
 
