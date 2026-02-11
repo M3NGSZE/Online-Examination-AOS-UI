@@ -8,6 +8,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.LoginScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.SignUpScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.VerifiedScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.VerifyOtpScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 
@@ -28,5 +29,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController){
             val email: String? = backStackEntry.arguments?.getString(Screen.VerifyOtp.ARG_EMAIL)
             VerifyOtpScreen(navController = navController, email = email)
         }
+
+        composable (route = Screen.Verified.route) { VerifiedScreen(navController = navController) }
     }
 }

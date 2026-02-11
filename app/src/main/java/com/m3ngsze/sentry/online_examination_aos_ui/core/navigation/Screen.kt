@@ -21,4 +21,6 @@ sealed class Screen(val route: String, val title: String) {
 
     object Room: Screen("Room_screen", "room")
 
+    object Verified: Screen("Verified_screen", "verified")
+
 }

@@ -1,6 +1,5 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.auth
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.R
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.InvalidInput
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SmallTextField
@@ -63,7 +62,7 @@ fun VerifyOtpScreen(
     val verifyState = viewModel.verifyState
     LaunchedEffect(verifyState) {
         if (verifyState == true){
-            navController.navigate(Screen.Login.route){
+            navController.navigate(Screen.VerifyOtp.route){
                 popUpTo (Screen.VerifyOtp.route){ inclusive = true  }
             }
         }
@@ -92,8 +91,8 @@ fun HeaderOtp(navController: NavHostController){
         modifier = Modifier
             .fillMaxWidth()
     ){
-        Image(
-            painter = painterResource(id = R.drawable.otp),
+        AsyncImage(
+            model = R.drawable.otp,
             contentDescription = "Otp icon",
             modifier = Modifier
                 .align(Alignment.Center)
@@ -206,7 +205,9 @@ fun OtpForm(
     }
 
     Button(
-        onClick = {},
+        onClick = {
+            viewModel.sendOtp(email?.trim())
+        },
         modifier = Modifier
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
@@ -219,11 +220,7 @@ fun OtpForm(
             color = Color.Black,
             style = TextStyle(
                 textDecoration = TextDecoration.Underline
-            ),
-            modifier = Modifier
-                .clickable{
-                    viewModel.sendOtp(email?.trim())
-                }
+            )
         )
     }
 
