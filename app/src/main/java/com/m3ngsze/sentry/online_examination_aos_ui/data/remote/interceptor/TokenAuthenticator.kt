@@ -14,10 +14,27 @@ class TokenAuthenticator @Inject constructor(
     private val repository: AuthRepository
 ) : Authenticator {
 
+    // Endpoints that should NOT trigger refresh
+    private val skipEndpoints = listOf(
+        "/auths/login",
+        "/auths/register",
+        "/auths/refresh",
+        "/auths/verify-otp",
+        "/auths/resend-otp",
+        "/auths/forgot-password",
+        "/auths/oauth2/google"
+    )
+
     override fun authenticate(
         route: Route?,
         response: Response
     ): Request? {
+
+        //  Skip refresh for non-auth endpoints
+        val path = response.request.url.encodedPath
+        val shouldSkip = skipEndpoints.any { path.contains(it) }
+
+        if (shouldSkip) return null
 
         // Prevent infinite loop
         if (responseCount(response) >= 2) {
@@ -30,11 +47,12 @@ class TokenAuthenticator @Inject constructor(
 
         return try {
 
+            // 🔄 Call refresh API
             val newAuth = runBlocking {
                 repository.refreshToken(refreshToken)
             }
 
-            // Save new tokens
+            // 💾 Save new tokens
             runBlocking {
                 sessionManager.saveTokens(
                     newAuth.accessToken,
@@ -42,7 +60,7 @@ class TokenAuthenticator @Inject constructor(
                 )
             }
 
-            // Retry original request
+            // 🔁 Retry original request with new token
             response.request.newBuilder()
                 .header(
                     "Authorization",
@@ -52,7 +70,7 @@ class TokenAuthenticator @Inject constructor(
 
         } catch (e: Exception) {
 
-            // Refresh failed → logout
+            //  Refresh failed → clear session
             runBlocking {
                 sessionManager.clearSession()
             }

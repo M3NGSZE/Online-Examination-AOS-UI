@@ -20,19 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileViewModel
 
 @Composable
-fun RoomScreen(navController: NavHostController){
-    ForPreview()
-}
-
-@Composable
-@Preview
-fun ForPreview(){
+fun RoomScreen(
+    navController: NavHostController,
+    viewModel: ProfileViewModel  = hiltViewModel()
+){
     Column (
         modifier = Modifier
             .padding(start = 40.dp, bottom = 25.dp, end = 25.dp)

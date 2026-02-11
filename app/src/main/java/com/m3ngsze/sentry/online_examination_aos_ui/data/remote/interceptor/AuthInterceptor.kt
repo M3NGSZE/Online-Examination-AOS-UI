@@ -10,21 +10,40 @@ class AuthInterceptor @Inject constructor(
     private val sessionManager: SessionManager
 ) : Interceptor {
 
+    // List of endpoints that DON'T require token
+    private val skipEndpoints = listOf(
+        "/auths/login",
+        "/auths/register",
+        "/auths/refresh",
+        "/auths/verify-otp",
+        "/auths/resend-otp",
+        "/auths/forgot-password",
+        "/auths/oauth2/google"
+    )
+
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        val token = runBlocking {
-            sessionManager.getAccessToken()
+        val originalRequest = chain.request()
+        val requestBuilder = originalRequest.newBuilder()
+
+        val path = originalRequest.url.encodedPath
+
+        // Check if request should skip token
+        val shouldSkip = skipEndpoints.any { path.contains(it) }
+
+        if (!shouldSkip) {
+            val token = runBlocking {
+                sessionManager.getAccessToken()
+            }
+
+            token?.let {
+                requestBuilder.addHeader(
+                    "Authorization",
+                    "Bearer $it"
+                )
+            }
         }
 
-        val request = chain.request().newBuilder()
-
-        token?.let {
-            request.addHeader(
-                "Authorization",
-                "Bearer $it"
-            )
-        }
-
-        return chain.proceed(request.build())
+        return chain.proceed(requestBuilder.build())
     }
 }

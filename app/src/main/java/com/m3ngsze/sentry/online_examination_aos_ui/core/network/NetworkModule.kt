@@ -4,6 +4,7 @@ import android.content.Context
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.ApiConstants
 import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.AuthApiService
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.UserApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,5 +54,12 @@ object NetworkModule {
     ): SessionManager {
         return SessionManager(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideUserApiService(
+        retrofit: Retrofit
+    ): UserApiService =
+        retrofit.create(UserApiService::class.java)
 
 }
