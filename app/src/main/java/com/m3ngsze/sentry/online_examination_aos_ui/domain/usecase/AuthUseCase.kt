@@ -73,8 +73,7 @@ class AuthUseCase @Inject constructor(
     }
 
     suspend fun logout(refreshToken: String): AppResult<Boolean>{
-        if (refreshToken.isBlank()) return AppResult.Error("Password is required")
-        Log.d("reAuth","$refreshToken")
+        if (refreshToken.isBlank()) return AppResult.Error("Refresh token is required")
         return safeApiCall { repository.logout(refreshToken) }
     }
 

@@ -1,6 +1,5 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.auth
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -83,7 +82,6 @@ class AuthViewModel @Inject constructor(
             errorState = null
 
             val refreshToken = sessionManager.getRefreshToken()
-            Log.d("refreshToken","$refreshToken")
             if (refreshToken.isNullOrEmpty()) {
                 errorState = "No refresh token found"
                 return@launch
@@ -91,13 +89,11 @@ class AuthViewModel @Inject constructor(
 
             when (val result = authUseCase.logout(refreshToken)) {
                 is AppResult.Success -> {
-                    Log.d("AppResultSuccess","Success")
                     logoutState = true
                     sessionManager.clearSession()
                 }
                 is AppResult.Error -> {
                     errorState = result.message
-                    Log.d("AppResultError","Error")
                 }
             }
         }

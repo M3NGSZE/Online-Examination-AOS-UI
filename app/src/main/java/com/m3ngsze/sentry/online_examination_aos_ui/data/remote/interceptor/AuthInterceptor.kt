@@ -38,11 +38,10 @@ class AuthInterceptor @Inject constructor(
 
         if (!shouldSkip) {
             val token = runBlocking {
-                sessionManager.getAccessToken()
-                Log.d("token","${sessionManager.getAccessToken()}")
+                sessionManager.getAccessToken().also { Log.d("token", "$it") }
             }
 
-            token.let {
+            token?.let {
                 requestBuilder.addHeader(
                     "Authorization",
                     "Bearer $it"

@@ -60,12 +60,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logout(refreshToken: String): Boolean {
-        Log.d("authRepo1", "Token: $refreshToken")
 
         val response = api.logout(refreshToken.trim())
-
-        Log.d("authRepo2", "Status: ${response.status}")
-        Log.d("authRepo3", "Message: ${response.message}")
 
         if (response.status != "200 OK") {
             throw Exception(response.message)

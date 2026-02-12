@@ -19,6 +19,7 @@ class TokenAuthenticator @Inject constructor(
         "/auths/login",
         "/auths/register",
         "/auths/refresh-token",
+        "/auths/logout",
         "/auths/verify-otp",
         "/auths/resend-otp",
         "/auths/forgot-password",
@@ -52,7 +53,7 @@ class TokenAuthenticator @Inject constructor(
                 repository.refreshToken(refreshToken)
             }
 
-            // 💾 Save new tokens
+            //  Save new tokens
             runBlocking {
                 sessionManager.saveTokens(
                     newAuth.accessToken,
