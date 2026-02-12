@@ -22,7 +22,7 @@ class TokenAuthenticator @Inject constructor(
         "/auths/verify-otp",
         "/auths/resend-otp",
         "/auths/forgot-password",
-        "/auths/oauth2/google"
+        "/auths/oauth2/google",
     )
 
     override fun authenticate(
@@ -47,7 +47,7 @@ class TokenAuthenticator @Inject constructor(
 
         return try {
 
-            // 🔄 Call refresh API
+            //  Call refresh API
             val newAuth = runBlocking {
                 repository.refreshToken(refreshToken)
             }
@@ -60,7 +60,7 @@ class TokenAuthenticator @Inject constructor(
                 )
             }
 
-            // 🔁 Retry original request with new token
+            // Retry original request with new token
             response.request.newBuilder()
                 .header(
                     "Authorization",

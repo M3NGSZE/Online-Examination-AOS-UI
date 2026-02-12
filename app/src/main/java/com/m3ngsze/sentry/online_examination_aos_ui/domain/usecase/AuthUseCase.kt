@@ -1,5 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase
 
+import android.util.Log
 import android.util.Patterns
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.safeApiCall
@@ -69,6 +70,12 @@ class AuthUseCase @Inject constructor(
         email?.contains("@")?.let { if (!it) return AppResult.Error("Invalid email format") }
 
         return safeApiCall { repository.sendOtp(email) }
+    }
+
+    suspend fun logout(refreshToken: String): AppResult<Boolean>{
+        if (refreshToken.isBlank()) return AppResult.Error("Password is required")
+        Log.d("reAuth","$refreshToken")
+        return safeApiCall { repository.logout(refreshToken) }
     }
 
 }

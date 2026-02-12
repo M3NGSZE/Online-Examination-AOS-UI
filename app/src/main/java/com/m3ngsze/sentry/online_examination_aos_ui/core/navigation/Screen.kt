@@ -23,4 +23,6 @@ sealed class Screen(val route: String, val title: String) {
 
     object Verified: Screen("Verified_screen", "verified")
 
+    object Profile: Screen("Profile_screen", "profile")
+
 }

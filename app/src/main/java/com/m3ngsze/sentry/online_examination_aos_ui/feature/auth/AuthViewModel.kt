@@ -1,11 +1,13 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.auth
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
+import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Auth
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     var authState by mutableStateOf<Auth?>(null)
@@ -26,6 +29,9 @@ class AuthViewModel @Inject constructor(
         private set
 
     var verifyState by mutableStateOf<Boolean?>(null)
+        private set
+
+    var logoutState by mutableStateOf<Boolean?>(null)
         private set
 
 
@@ -68,6 +74,31 @@ class AuthViewModel @Inject constructor(
             when (val result = authUseCase.sendOtp(email)) {
                 is AppResult.Success -> verifyState = result.data
                 is AppResult.Error -> errorState = result.message
+            }
+        }
+    }
+
+    fun logout(){
+        viewModelScope.launch {
+            errorState = null
+
+            val refreshToken = sessionManager.getRefreshToken()
+            Log.d("refreshToken","$refreshToken")
+            if (refreshToken.isNullOrEmpty()) {
+                errorState = "No refresh token found"
+                return@launch
+            }
+
+            when (val result = authUseCase.logout(refreshToken)) {
+                is AppResult.Success -> {
+                    Log.d("AppResultSuccess","Success")
+                    logoutState = true
+                    sessionManager.clearSession()
+                }
+                is AppResult.Error -> {
+                    errorState = result.message
+                    Log.d("AppResultError","Error")
+                }
             }
         }
     }

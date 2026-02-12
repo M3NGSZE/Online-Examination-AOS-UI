@@ -1,7 +1,7 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
+import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,11 +38,14 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileViewModel
 import com.m3ngsze.sentry.online_examination_aos_ui.R
+import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.AuthViewModel
 
 @Composable
 fun RoomScreen(
     navController: NavHostController,
-    viewModel: ProfileViewModel  = hiltViewModel()
+    viewModel: ProfileViewModel  = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
 ){
 
     LaunchedEffect (Unit) {
@@ -56,15 +59,31 @@ fun RoomScreen(
     ){
         HeaderRoom(
             navController = navController,
-            viewModel = viewModel
+            viewModel = viewModel,
+            authViewModel = authViewModel
         )
+
+        RoomBody(
+            navController = navController
+        )
+    }
+
+    val logout = authViewModel.logoutState
+    Log.d("logout","$logout")
+    LaunchedEffect(logout) {
+        if (logout == true){
+            navController.navigate(Screen.Login.route){
+                popUpTo (Screen.Room.route){ inclusive = true }
+            }
+        }
     }
 }
 
 @Composable
 fun HeaderRoom(
     navController: NavHostController,
-    viewModel: ProfileViewModel  = hiltViewModel()
+    viewModel: ProfileViewModel  = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel()
 ){
     val user = viewModel.userState
     var expanded by remember { mutableStateOf(false) }
@@ -131,7 +150,7 @@ fun HeaderRoom(
                         text = { Text("Profile") },
                         onClick = {
                             expanded = false
-                            navController.navigate("profile")
+                            navController.navigate(Screen.Profile.route)
                         }
                     )
 
@@ -142,7 +161,10 @@ fun HeaderRoom(
 
                     DropdownMenuItem(
                         text = { Text("Logout") },
-                        onClick = { expanded = false }
+                        onClick = {
+                            expanded = false
+                            authViewModel.logout()
+                        }
                     )
                 }
             }
@@ -155,4 +177,11 @@ fun HeaderRoom(
             )
         }
     }
+}
+
+@Composable
+fun RoomBody(
+    navController: NavHostController,
+){
+
 }

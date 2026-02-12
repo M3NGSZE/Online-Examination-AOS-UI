@@ -7,6 +7,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.Ot
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.ApiResponse
 import retrofit2.http.Body
+import retrofit2.http.Field
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -29,6 +30,11 @@ interface AuthApiService {
     @POST("auths/resend-otp")
     suspend fun sendOtp(
         @Query("email") email: String?
+    ): ApiResponse<Boolean>
+
+    @POST("auths/logout")
+    suspend fun logout(
+        @Query("refreshToken") refreshToken: String
     ): ApiResponse<Boolean>
 
 }
