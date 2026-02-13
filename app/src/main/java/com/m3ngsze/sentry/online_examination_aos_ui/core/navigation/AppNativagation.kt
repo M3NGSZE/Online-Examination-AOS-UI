@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 fun AppNavigation(navController: NavHostController){
 
     Scaffold (
+//        containerColor = Color(0xFFF9F3E6)
         containerColor = Color(0xFFFCFCFC)
     ) { innerPadding ->
         NavHost(
