@@ -18,14 +18,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,9 +47,9 @@ fun ProfileScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel()
 ){
-//    LaunchedEffect (Unit) {
-//        viewModel.getUserProfile()
-//    }
+/*    LaunchedEffect (Unit) {
+        viewModel.getUserProfile()
+    }*/
 
     var switch by remember { mutableStateOf(true) }
 
@@ -72,7 +71,7 @@ fun ProfileScreen(
 
         ProfileTab{ switch = it}
 
-
+        if (switch) StatsTap() else InfoTap()
     }
 }
 
@@ -259,13 +258,13 @@ fun ProfileTab(
 
         Box (
             modifier = Modifier
+//                .clickable{
+//                    x = true
+//                    y = false
+//                }
                 .fillMaxWidth(0.5f)
                 .background(Color(box1), shape = RoundedCornerShape(20))
                 .padding(5.dp)
-                .clickable{
-                    x = true
-                    y = false
-                },
         ){
             Text(
                 modifier = Modifier
@@ -280,13 +279,13 @@ fun ProfileTab(
 
         Box(
             modifier = Modifier
+//                .clickable{
+//                    y = true
+//                    x = false
+//                }
                 .fillMaxWidth()
                 .background(Color(box2), shape = RoundedCornerShape(20))
                 .padding(5.dp)
-                .clickable{
-                    y = true
-                    x = false
-                },
         ){
             Text(
                 modifier = Modifier
@@ -297,6 +296,184 @@ fun ProfileTab(
                 textAlign = TextAlign.Center
             )
         }
-
     }
+
+    Spacer(
+        modifier = Modifier
+            .height(20.dp)
+    )
+}
+
+@Composable
+fun StatsTap(){
+    TeachingStats()
+
+}
+
+@Composable
+fun TeachingStats(){
+
+    Row (
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Text(
+            text = "Teaching Statistic",
+            fontWeight = FontWeight.SemiBold
+        )
+
+        Icon(
+            imageVector = Icons.Default.Tune,
+            contentDescription = "filter"
+        )
+    }
+
+    Spacer(
+        modifier = Modifier
+            .height(10.dp)
+    )
+
+    Row (
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.48f)
+                .height(100.dp)
+        ) {
+            Text(
+                text = "67",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+
+            Text(
+                text = "All Students",
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF757575),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+        }
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .height(100.dp)
+        ) {
+            Text(
+                text = "67",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+
+            Text(
+                text = "All Rooms",
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF757575),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+        }
+    }
+
+    Spacer(
+        modifier = Modifier
+            .height(20.dp)
+    )
+
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color(0xFFE4E5E9), shape = RoundedCornerShape(20)),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Column(
+            modifier = Modifier
+                .padding(start = 20.dp, top = 20.dp, bottom = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "67",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+            )
+
+            Text(
+                text = "Total Exam",
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF757575)
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "67",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+            )
+
+            Text(
+                text = "Upcoming Exam",
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF757575)
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(end = 20.dp, top = 20.dp, bottom = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "67",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+            )
+
+            Text(
+                text = "Total Submit",
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF757575)
+            )
+        }
+    }
+}
+
+@Composable
+fun InfoTap(){
+    Text(
+        text = "info"
+    )
 }
