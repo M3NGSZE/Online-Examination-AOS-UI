@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.InvalidInput
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.Oauth2Form
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.PasswordBox
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SimpleDropBox
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBox
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.request.RegisterRequest
@@ -123,6 +124,7 @@ fun SignUpForm(
     var password by remember { mutableStateOf("") }
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
+    var sex by remember { mutableStateOf("") }
 
     val errorState: String? = viewModel.errorState
     val borderColor by remember(errorState) {
@@ -139,6 +141,13 @@ fun SignUpForm(
         outline = borderColor
     ) { lastName = it}
 
+    SimpleDropBox(
+        label = "Sex",
+        outline = borderColor
+    ){
+        sex = it
+    }
+
     TextBox(
         label = "email",
         outline = borderColor
@@ -154,7 +163,7 @@ fun SignUpForm(
             .height(15.dp)
     )
 
-    val request = RegisterRequest(email.trim(), password, firstName, lastName)
+    val request = RegisterRequest(email.trim(), password, firstName, lastName, sex)
 
     if (errorState != null){
         InvalidInput(msg = errorState)

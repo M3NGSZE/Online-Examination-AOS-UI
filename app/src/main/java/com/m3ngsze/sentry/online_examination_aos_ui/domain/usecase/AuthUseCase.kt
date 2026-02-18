@@ -1,6 +1,5 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase
 
-import android.util.Log
 import android.util.Patterns
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.safeApiCall
@@ -39,6 +38,7 @@ class AuthUseCase @Inject constructor(
 
         if (request.firstName.isBlank()) return AppResult.Error("First name is required")
         if (request.lastName.isBlank()) return AppResult.Error("Last name is required")
+        if (request.sex.isBlank() || request.sex.isEmpty()) return AppResult.Error("Sex is required")
 
         if (!Patterns.EMAIL_ADDRESS.matcher(request.email).matches())
             return AppResult.Error("Invalid email format")
