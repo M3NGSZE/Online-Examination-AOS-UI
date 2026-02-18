@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -49,7 +49,7 @@ fun ResultCard(
             horizontalArrangement = Arrangement.spacedBy(15.dp),
         ){
             Icon(
-                imageVector = Icons.Default.Assignment,
+                imageVector = Icons.AutoMirrored.Filled.Assignment,
                 contentDescription = "Assignment"
             )
 
@@ -57,7 +57,8 @@ fun ResultCard(
                 Text(
                     text = "Result: ",
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    minLines = 1
                 )
 
                 Spacer(

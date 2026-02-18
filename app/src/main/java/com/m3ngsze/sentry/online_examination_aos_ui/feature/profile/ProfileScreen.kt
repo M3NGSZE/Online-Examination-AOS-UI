@@ -69,12 +69,11 @@ fun ProfileScreen(
 
         ProfileTab{ switch = it}
 
-        if (switch == 0)
-            StatsTab()
-        else if (switch == 1)
-            ResultTab()
-        else if (switch == 2)
-            InfoTab()
+        when (switch) {
+            0 -> StatsTab()
+            1 -> ResultTab()
+            2 -> InfoTab()
+        }
     }
 }
 
@@ -197,7 +196,7 @@ fun ProfileTab(
     val active = Color(0xFFFFFFFF)
     val unActive = Color(0xFFE4E5E9)
 
-    var selectedIndex by remember { mutableIntStateOf(1) }
+    var selectedIndex by remember { mutableIntStateOf(2) }
 
     getValue(selectedIndex)
 
