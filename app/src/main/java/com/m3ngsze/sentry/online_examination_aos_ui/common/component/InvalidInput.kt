@@ -31,7 +31,7 @@ fun InvalidInput(msg: String?){
     ){
         Icon(
             imageVector  = Icons.Default.WarningAmber,
-            contentDescription = "",
+            contentDescription = "Invalid Input",
             tint = Color.Red,
             modifier = Modifier
                 .size(20.dp)

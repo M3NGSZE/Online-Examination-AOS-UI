@@ -196,7 +196,7 @@ fun ProfileTab(
     val active = Color(0xFFFFFFFF)
     val unActive = Color(0xFFE4E5E9)
 
-    var selectedIndex by remember { mutableIntStateOf(2) }
+    var selectedIndex by remember { mutableIntStateOf(1) }
 
     getValue(selectedIndex)
 
