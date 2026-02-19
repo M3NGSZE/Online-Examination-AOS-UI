@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -203,4 +205,75 @@ fun RoomBody(
         outline = Color(0x73919090),
         getValue = {search = it}
     ) { }
+
+    RoomCard(
+        room = "PVH",
+        sec = "Full Shift",
+        des = "13 Students"
+    )
+
+    RoomCard(
+        room = "Java Basic",
+        sec = "Afternoon Shift",
+        des = "Chanelle Moon"
+    )
+}
+
+@Composable
+fun RoomCard(
+    room: String,
+    sec: String,
+    des: String
+){
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = Color(0xFFE3E4E8),
+                shape = RoundedCornerShape(20)
+            )
+            .padding(15.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Column {
+            Text(
+                text = room,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                minLines = 1
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+            )
+
+            Text(
+                text = sec,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(
+                modifier = Modifier
+                    .height(30.dp)
+            )
+
+            Text(
+                text = des,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+
+        Icon(
+            imageVector = Icons.Default.MoreHoriz,
+            contentDescription = "More option",
+        )
+    }
+
+    Spacer(
+        modifier = Modifier
+            .height(15.dp)
+    )
 }
