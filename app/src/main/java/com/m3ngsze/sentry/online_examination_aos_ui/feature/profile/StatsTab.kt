@@ -12,18 +12,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.StatCardLarge
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.StatCardSmall
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.StatItem
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SubHeader
 
 @Composable
 fun StatsTab(){
@@ -36,25 +33,10 @@ fun TeachingStats() {
 
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        // Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Teaching Stats",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 16.sp
-            )
-
-            Icon(
-                imageVector = Icons.Default.Tune,
-                contentDescription = "filter"
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
+        SubHeader(
+            title = "Teaching Stats",
+            icon = Icons.Default.Tune,
+        ) { }
 
         // Top cards
         Row(
@@ -109,23 +91,10 @@ fun StudyStats() {
         modifier = Modifier.fillMaxWidth()
     ) {
 
-        // Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Exam Stats",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 16.sp
-            )
-
-            Icon(
-                imageVector = Icons.Default.Tune,
-                contentDescription = "filter"
-            )
-        }
+        SubHeader(
+            title = "Exam Stats",
+            icon = Icons.Default.Tune,
+        ) { }
 
         Spacer(modifier = Modifier.height(10.dp))
 

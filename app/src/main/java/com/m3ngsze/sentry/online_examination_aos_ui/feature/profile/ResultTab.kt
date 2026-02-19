@@ -56,7 +56,8 @@ fun SearchBarResult(
                 .height(50.dp),
             label = "Search",
             outline = Color(0x73919090),
-        ) { search = it}
+            getValue = {search = it}
+        ) { }
 
         Icon(
             imageVector = Icons.Default.Tune,

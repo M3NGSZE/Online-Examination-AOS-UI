@@ -1,12 +1,12 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileViewModel
 import com.m3ngsze.sentry.online_examination_aos_ui.R
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SearchBox
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.AuthViewModel
 
@@ -46,17 +47,18 @@ fun RoomScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
-){
+) {
 
-    LaunchedEffect (Unit) {
+    LaunchedEffect(Unit) {
         viewModel.getUserProfile()
     }
 
-    Column (
+    Column(
         modifier = Modifier
-            .padding(start = 40.dp, bottom = 25.dp, end = 25.dp)
+            .padding(25.dp, end = 25.dp, top = 0.dp)
             .background(Color(0xFFFCFCFC))
-    ){
+    ) {
+
         HeaderRoom(
             navController = navController,
             viewModel = viewModel,
@@ -68,22 +70,23 @@ fun RoomScreen(
         )
     }
 
+
     val logout = authViewModel.logoutState
-    Log.d("logout","$logout")
     LaunchedEffect(logout) {
-        if (logout == true){
-            navController.navigate(Screen.Login.route){
-                popUpTo (Screen.Room.route){ inclusive = true }
+        if (logout == true) {
+            navController.navigate(Screen.Login.route) {
+                popUpTo(Screen.Room.route) { inclusive = true }
             }
         }
     }
 }
 
+
 @Composable
 fun HeaderRoom(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel(),
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel = hiltViewModel(),
 ){
     val user = viewModel.userState
     var expanded by remember { mutableStateOf(false) }
@@ -100,6 +103,7 @@ fun HeaderRoom(
             modifier = Modifier.fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Text(
                 text = "Exam",
                 fontSize = 23.sp,
@@ -184,4 +188,19 @@ fun RoomBody(
     navController: NavHostController,
 ){
 
+    Spacer(
+        modifier = Modifier
+            .height(15.dp)
+    )
+
+    var search by remember { mutableStateOf("") }
+
+    SearchBox (
+        modifier = Modifier
+            .fillMaxWidth(0.9f)
+            .height(50.dp),
+        label = "Search",
+        outline = Color(0x73919090),
+        getValue = {search = it}
+    ) { }
 }
