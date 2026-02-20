@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.sp
 fun SubHeader(
     title: String,
     icon: ImageVector,
+    font: TextUnit,
     filter: () -> Unit
 ){
     Row(
@@ -29,7 +31,7 @@ fun SubHeader(
         Text(
             text = title,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 16.sp
+            fontSize = font
         )
 
         Icon(

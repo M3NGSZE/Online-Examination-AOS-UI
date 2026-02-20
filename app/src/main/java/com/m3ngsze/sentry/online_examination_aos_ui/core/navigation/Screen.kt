@@ -19,10 +19,12 @@ sealed class Screen(val route: String, val title: String) {
         fun createRoute(email: String): String = "verify_otp_screen/${Uri.encode(email)}"
     }
 
-    object Room: Screen("Room_screen", "room")
+    object Room: Screen("room_screen", "room")
 
-    object Verified: Screen("Verified_screen", "verified")
+    object RoomDetail: Screen("room_detail_screen", "roomDetail")
 
-    object Profile: Screen("Profile_screen", "profile")
+    object Verified: Screen("verified_screen", "verified")
+
+    object Profile: Screen("profile_screen", "profile")
 
 }

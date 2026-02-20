@@ -36,6 +36,7 @@ fun TeachingStats() {
         SubHeader(
             title = "Teaching Stats",
             icon = Icons.Default.Tune,
+            font = 16.sp
         ) { }
 
         // Top cards
@@ -94,6 +95,7 @@ fun StudyStats() {
         SubHeader(
             title = "Exam Stats",
             icon = Icons.Default.Tune,
+            font = 16.sp
         ) { }
 
         Spacer(modifier = Modifier.height(10.dp))
