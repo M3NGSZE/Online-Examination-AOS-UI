@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PendingActions
 import androidx.compose.material.icons.filled.People
@@ -36,7 +35,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SubHeader
 fun RoomDetailScreen(
     navController: NavHostController,
 ){
-    var indexTab by remember { mutableIntStateOf(0) }
+    var indexTab by remember { mutableIntStateOf(1) }
 
     Column(
         modifier = Modifier

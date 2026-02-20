@@ -21,14 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.util.UUID
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Exam
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Task
 
 @Composable
-fun RowCard(
-    id: UUID,
-    title: String,
-    create: String,
-    update: String?,
+fun ExamCard(
+    exam: Exam
 ){
     Row (
         modifier = Modifier
@@ -51,7 +49,7 @@ fun RowCard(
 
             Column {
                 Text(
-                    text = title,
+                    text = exam.title,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     minLines = 1
@@ -63,17 +61,17 @@ fun RowCard(
                 )
 
                 Text(
-                    text = "Posted $create",
+                    text = "Posted ${exam.createdAt}",
                     color = Color.Gray,
                 )
 
-                if (update!=null){
+                if (exam.updatedAt!=null){
                     Spacer(
                         modifier = Modifier
                             .height(5.dp)
                     )
                     Text(
-                        text = "Edited $create",
+                        text = "Edited ${exam.updatedAt}",
                         color = Color.Gray,
                     )
                 }
@@ -83,6 +81,66 @@ fun RowCard(
         Icon(
             imageVector = Icons.Default.MoreHoriz,
             contentDescription = "More option",
+        )
+
+    }
+
+    Spacer(
+        modifier = Modifier
+            .height(15.dp)
+    )
+}
+
+@Composable
+fun TaskCard(
+    task: Task
+){
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = Color(0xFFE3E4E8),
+                shape = RoundedCornerShape(20)
+            )
+            .padding(15.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
+        ){
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.Assignment,
+                contentDescription = "Assignment"
+            )
+
+            Column {
+                Text(
+                    text = task.title,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    minLines = 1
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .height(10.dp)
+                )
+
+                Text(
+                    text = if (task.due != null) "Due ${task.due}" else "No die date",
+                    color = Color.Gray,
+                )
+
+            }
+        }
+
+        Text(
+            text = task.status,
+            color = if (task.status == "Assigned") Color.Gray else Color(0xFF1F7F15),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 16.sp
         )
     }
 
