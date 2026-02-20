@@ -1,6 +1,7 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -35,7 +37,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SubHeader
 fun RoomDetailScreen(
     navController: NavHostController,
 ){
-    var indexTab by remember { mutableIntStateOf(1) }
+    var indexTab by remember { mutableIntStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -52,7 +54,7 @@ fun RoomDetailScreen(
             SubHeader(
                 title = "RoomName",
                 icon = Icons.Default.Info,
-                font = 23.sp
+                font = 26.sp
             ) { }
 
             when(indexTab){
@@ -62,19 +64,28 @@ fun RoomDetailScreen(
             }
         }
 
-        BottomNavigation()
+        BottomNavigation{
+            indexTab = it
+        }
     }
 }
 
 @Composable
 fun BottomNavigation(
-
+    getIndex: (Int) -> Unit
 ){
+
+    val active = Color(0xFFFFFFFF)
+    val unActive = Color(0xFFE4E5E9)
+    var selectedIndex by remember { mutableIntStateOf(2) }
+
+    getIndex(selectedIndex)
+
     Row (
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = Color(0xFFE4E5E9),
+                color = unActive,
                 shape = RoundedCornerShape(20)
             )
             .padding(vertical = 10.dp),
@@ -83,31 +94,53 @@ fun BottomNavigation(
     ){
         NavigationItem(
             title = "Activities",
-            icon = Icons.Default.Task
-        )
+            icon = Icons.Default.Task,
+            isSelected = selectedIndex == 0,
+            active = active,
+            unActive = unActive
+        ){
+            selectedIndex = 0
+        }
 
         NavigationItem(
             title = "Classwork",
-            icon = Icons.Default.PendingActions
-        )
+            icon = Icons.Default.PendingActions,
+            isSelected = selectedIndex == 1,
+            active = active,
+            unActive = unActive
+        ){
+            selectedIndex = 1
+        }
 
         NavigationItem(
             title = "People",
-            icon = Icons.Default.People
-        )
+            icon = Icons.Default.People,
+            isSelected = selectedIndex == 2,
+            active = active,
+            unActive = unActive
+        ){
+            selectedIndex = 2
+        }
     }
 }
 
 @Composable
 fun NavigationItem(
     title: String,
-    icon: ImageVector
+    icon: ImageVector,
+    isSelected: Boolean,
+    active: Color,
+    unActive: Color,
+    onClick: () -> Unit
 ){
     Column (
-        modifier = Modifier,
-//            .background(
-//                color = Color.Gray
-//            ),
+        modifier = Modifier
+            .clickable{ onClick() }
+            .background(
+                color = if (isSelected) active else unActive,
+                shape = RoundedCornerShape((20))
+            )
+            .padding(5.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Icon(
