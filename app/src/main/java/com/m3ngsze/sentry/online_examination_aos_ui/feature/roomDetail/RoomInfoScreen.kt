@@ -1,4 +1,4 @@
-package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
+package com.m3ngsze.sentry.online_examination_aos_ui.feature.roomDetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

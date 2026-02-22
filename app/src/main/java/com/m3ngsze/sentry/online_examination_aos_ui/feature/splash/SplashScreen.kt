@@ -30,7 +30,7 @@ fun SplashScreen(
         val loggedIn = viewModel.isLoggedIn()
 
         if (loggedIn) {
-            navController.navigate(Screen.RoomInfo.route) {
+            navController.navigate(Screen.RoomDetail.route) {
                 popUpTo(Screen.Splash.route) { inclusive = true }
             }
         } else {

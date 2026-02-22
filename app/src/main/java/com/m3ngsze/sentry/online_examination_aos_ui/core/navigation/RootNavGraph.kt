@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileScreen
-import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomDetailScreen
-import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomInfoScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.roomDetail.RoomDetailScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.roomDetail.RoomInfoScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 

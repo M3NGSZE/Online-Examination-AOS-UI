@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun SubHeader(
     title: String,
-    icon: ImageVector,
+    icon: ImageVector?,
     font: TextUnit,
     onClick: () -> Unit
 ){
@@ -39,14 +39,16 @@ fun SubHeader(
             fontSize = font
         )
 
-        Icon(
-            imageVector = icon,
-            contentDescription = "filter",
-            modifier = Modifier
-                .clickable{
-                    onClick()
-                }
-        )
+        if (icon != null){
+            Icon(
+                imageVector = icon,
+                contentDescription = "filter",
+                modifier = Modifier
+                    .clickable{
+                        onClick()
+                    }
+            )
+        }
     }
 
     Spacer(modifier = Modifier.height(10.dp))
