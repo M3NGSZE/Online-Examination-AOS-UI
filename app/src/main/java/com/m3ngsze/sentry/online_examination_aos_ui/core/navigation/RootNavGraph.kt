@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomDetailScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomInfoScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 
@@ -21,5 +22,7 @@ fun NavGraphBuilder.rootNavGraph(navController: NavHostController) {
         composable (route = Screen.RoomDetail.route) { RoomDetailScreen(navController = navController) }
 
         composable (route = Screen.Profile.route) { ProfileScreen(navController = navController) }
+
+        composable (route = Screen.RoomInfo.route) { RoomInfoScreen(navController = navController) }
     }
 }

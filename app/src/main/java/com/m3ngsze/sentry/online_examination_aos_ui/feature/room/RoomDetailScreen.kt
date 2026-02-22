@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SubHeader
+import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
 @Composable
 fun RoomDetailScreen(
@@ -55,7 +56,9 @@ fun RoomDetailScreen(
                 title = "RoomName",
                 icon = Icons.Default.Info,
                 font = 26.sp
-            ) { }
+            ) {
+                navController.navigate(Screen.RoomInfo.route)
+            }
 
             when(indexTab){
                 0 -> ActivityTab()
@@ -77,7 +80,7 @@ fun BottomNavigation(
 
     val active = Color(0xFFFFFFFF)
     val unActive = Color(0xFFE4E5E9)
-    var selectedIndex by remember { mutableIntStateOf(2) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
 
     getIndex(selectedIndex)
 

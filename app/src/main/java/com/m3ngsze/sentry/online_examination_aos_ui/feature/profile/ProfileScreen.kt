@@ -1,6 +1,7 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +54,7 @@ fun ProfileScreen(
 
     Column (
         modifier = Modifier
-            .padding(start = 25.dp, bottom = 25.dp, end = 25.dp)
+            .padding(start = 25.dp, end = 25.dp)
             .background(Color(0xFFFCFCFC))
 //            .background(Color(0xFFF9F3E6))
             .fillMaxWidth()
@@ -79,7 +80,7 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileHeader(
-    navController: NavHostController,
+    navController: NavHostController
 ){
     Row (
         modifier = Modifier
@@ -104,7 +105,8 @@ fun ProfileHeader(
 
         Icon(
             imageVector = Icons.Default.Edit,
-            contentDescription = "Edit personal info"
+            contentDescription = "Edit personal info",
+            modifier = Modifier
         )
     }
 
