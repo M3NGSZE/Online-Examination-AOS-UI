@@ -57,7 +57,7 @@ fun RoomScreen(
 
     Column(
         modifier = Modifier
-            .padding(25.dp, end = 25.dp, top = 0.dp)
+            .padding(start = 25.dp, end = 25.dp)
             .background(Color(0xFFFCFCFC))
     ) {
 

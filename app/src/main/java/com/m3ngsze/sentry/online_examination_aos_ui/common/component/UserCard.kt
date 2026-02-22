@@ -31,27 +31,41 @@ fun UserCard(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(20.dp)
+        horizontalArrangement = Arrangement.SpaceBetween
     ){
-        Box(
-            modifier = Modifier
-                .size(30.dp)
-                .background(Color.Gray, CircleShape)
-        ) {
-            AsyncImage(
-                model = profile.profileUrl
-                    ?: R.drawable.profile,
-                contentDescription = "profile img",
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(20.dp)
+        ){
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
+                    .size(30.dp)
+                    .background(Color.Gray, CircleShape)
+            ) {
+                AsyncImage(
+                    model = profile.profileUrl
+                        ?: R.drawable.profile,
+                    contentDescription = "profile img",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(CircleShape)
+                )
+            }
+
+            Text(
+                text = "${profile.lastName} ${profile.firstName}",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 15.sp
             )
         }
 
-        Text(
-            text = "${profile.lastName} ${profile.firstName}",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 15.sp
-        )
+        if (profile.status!=null){
+            Text(
+                text = profile.status,
+                color = if (profile.status == "Assigned") Color(0xFF1F7F15) else Color.Gray,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp
+            )
+        }
     }
 }

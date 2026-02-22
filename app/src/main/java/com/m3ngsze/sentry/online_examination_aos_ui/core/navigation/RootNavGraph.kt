@@ -8,6 +8,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileScree
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.roomDetail.RoomDetailScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.roomDetail.RoomInfoScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.room.RoomScreen
+import com.m3ngsze.sentry.online_examination_aos_ui.feature.roomOwner.RoomOwnerScreen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.splash.SplashScreen
 
 fun NavGraphBuilder.rootNavGraph(navController: NavHostController) {
@@ -24,5 +25,7 @@ fun NavGraphBuilder.rootNavGraph(navController: NavHostController) {
         composable (route = Screen.Profile.route) { ProfileScreen(navController = navController) }
 
         composable (route = Screen.RoomInfo.route) { RoomInfoScreen(navController = navController) }
+
+        composable (route= Screen.RoomOwner.route){ RoomOwnerScreen(navController = navController) }
     }
 }

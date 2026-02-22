@@ -19,7 +19,7 @@ fun PeopleTab(
     label: String,
     icon: ImageVector?
 ){
-    val profile = Profile(UUID.randomUUID(), "Chanelle", "Moon", null)
+    val profile = Profile(UUID.randomUUID(), "Chanelle", "Moon", null, null)
 
     TeacherSection(profile, icon)
 
