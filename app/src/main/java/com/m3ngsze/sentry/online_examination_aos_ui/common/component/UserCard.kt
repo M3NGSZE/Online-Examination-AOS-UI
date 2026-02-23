@@ -62,7 +62,7 @@ fun UserCard(
         if (profile.status!=null){
             Text(
                 text = profile.status,
-                color = if (profile.status == "Assigned") Color(0xFF1F7F15) else Color.Gray,
+                color = if (profile.status == "Assigned") Color.Gray else Color(0xFF1F7F15),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp
             )

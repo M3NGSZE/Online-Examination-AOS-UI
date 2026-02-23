@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.m3ngsze.sentry.online_examination_aos_ui.common.component.HeaderRoomInfo
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.HeaderArrowBack
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
 @Composable
@@ -23,7 +23,7 @@ fun RoomInfoScreen(
             .fillMaxWidth()
             .padding(horizontal = 25.dp)
     ) {
-        HeaderRoomInfo (
+        HeaderArrowBack (
             title = "About"
         ){
             navController.navigate(Screen.RoomDetail.route)

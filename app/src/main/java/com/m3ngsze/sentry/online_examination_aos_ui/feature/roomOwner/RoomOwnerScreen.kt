@@ -85,7 +85,7 @@ fun RoomOwnerScreen(
             }
 
             BottomNavigation {
-//                indexTab = it
+                indexTab = it
             }
         }
 
@@ -98,7 +98,11 @@ fun RoomOwnerScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add"
+                    contentDescription = "Add",
+                    modifier = Modifier
+                        .clickable{
+                            navController.navigate(Screen.CreateExam.route)
+                        }
                 )
             }
         }

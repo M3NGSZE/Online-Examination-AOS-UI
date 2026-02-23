@@ -55,7 +55,7 @@ fun SubHeader(
 }
 
 @Composable
-fun HeaderRoomInfo(
+fun HeaderArrowBack(
     title: String,
     onClick: () -> Unit
 ){
