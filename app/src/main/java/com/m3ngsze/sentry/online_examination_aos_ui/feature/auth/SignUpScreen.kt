@@ -133,12 +133,14 @@ fun SignUpForm(
 
     TextBox(
         label = "first name",
-        outline = borderColor
+        outline = borderColor,
+        trailIcon = null
     ) { firstName = it}
 
     TextBox(
         label = "last name",
-        outline = borderColor
+        outline = borderColor,
+        trailIcon =  null
     ) { lastName = it}
 
     SimpleDropBox(
@@ -150,7 +152,8 @@ fun SignUpForm(
 
     TextBox(
         label = "email",
-        outline = borderColor
+        outline = borderColor,
+        trailIcon =  null
     ) { email = it}
 
     PasswordBox (

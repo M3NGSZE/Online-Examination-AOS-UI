@@ -12,8 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.AppDatePicker
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.HeaderArrowBack
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.RequireIcon
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBox
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.TextBoxDatPicker
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
 @Composable
@@ -41,14 +44,27 @@ fun CreateExamForm(
 ){
     var title by remember { mutableStateOf("") }
     var subject by remember { mutableStateOf("") }
-    var duration: String? by remember { mutableStateOf("") }
     var scheduleDate: String? by remember { mutableStateOf("") }
     var startAt : String? by remember { mutableStateOf("") }
     var endAt :String? by remember { mutableStateOf("") }
 
     TextBox(
       label = "Title",
-        outline = Color(0x73919090)
+      outline = Color(0x73919090),
+      trailIcon = { RequireIcon() }
     ) { title = it }
 
+    TextBox(
+        label = "Subject",
+        outline = Color(0x73919090),
+        trailIcon = { RequireIcon() }
+
+    ) { subject = it }
+
+    TextBoxDatPicker(
+        label = "Set up schedule",
+        outline = Color(0x73919090),
+        trailIcon = { AppDatePicker { scheduleDate = it} },
+        y = scheduleDate
+    )
 }

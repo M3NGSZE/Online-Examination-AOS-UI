@@ -122,7 +122,8 @@ fun LoginForm(
 
     TextBox(
         label = "email",
-        outline = borderColor
+        outline = borderColor,
+        trailIcon =  null
     ) { e -> email = e }
 
     Spacer(

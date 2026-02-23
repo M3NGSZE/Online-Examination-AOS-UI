@@ -1,15 +1,24 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.common.component
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,11 +33,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.Instant
+import java.time.ZoneId
 
 @Composable
 fun TextBox(
     label: String,
     outline: Color,
+    trailIcon: @Composable (() -> Unit)? = null,
     getValue: (String) -> Unit
 ){
     var x by remember { mutableStateOf("") }
@@ -54,7 +66,10 @@ fun TextBox(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Done
-        )
+        ),
+        trailingIcon = {
+            trailIcon?.invoke()
+        },
     )
 }
 
@@ -91,5 +106,101 @@ fun SmallTextField(
             .width(w)
             .height(h)
             .padding(horizontal = 5.dp)
+    )
+}
+
+@Composable
+fun TextBoxDatPicker(
+    label: String,
+    outline: Color,
+    trailIcon: @Composable (() -> Unit)? = null,
+    y : String?
+){
+    var x by remember { mutableStateOf(y) }
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        value = y!!,
+        onValueChange = {x},
+        placeholder = {Text(label)},
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            focusedIndicatorColor = Color(0xFF305EAF),
+            unfocusedIndicatorColor = outline
+        ),
+        singleLine = true,
+        textStyle = TextStyle(
+            fontSize = 18.sp
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Done
+        ),
+        trailingIcon = {
+            trailIcon?.invoke()
+        },
+        readOnly = true
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppDatePicker(
+    getValue: (String) -> Unit
+) {
+
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedDate by remember { mutableStateOf("") }
+
+    getValue(selectedDate)
+
+    val datePickerState = rememberDatePickerState()
+
+    Column {
+        Icon(
+            imageVector = Icons.Default.DateRange,
+            contentDescription = "Date Time Pick",
+            tint = Color.Red,
+            modifier = Modifier
+                .clickable{
+                    showDialog = true
+                }
+        )
+
+        if (showDialog) {
+            DatePickerDialog (
+                onDismissRequest = { showDialog = false },
+                confirmButton = {
+                    TextButton (
+                        onClick = {
+                            val millis = datePickerState.selectedDateMillis
+                            if (millis != null) {
+                                val date = Instant.ofEpochMilli(millis)
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDate()
+                                selectedDate = date.toString()
+                            }
+                            showDialog = false
+                        }
+                    ) {
+                        Text("OK")
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
+            }
+        }
+    }
+}
+
+@Composable
+fun RequireIcon(){
+    Text(
+        text = "*",
+        fontSize = 25.sp,
+        color = Color.Red
     )
 }
