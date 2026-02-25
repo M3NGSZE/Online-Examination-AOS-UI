@@ -24,7 +24,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,12 +63,14 @@ fun RoomScreen(
         viewModel.getUserProfile()
     }
 
+    var showSheet by remember { mutableStateOf(false) }
+
     Scaffold(
         floatingActionButton = {
             Button(
-                onClick = {},
+                onClick = { showSheet = true },
                 modifier = Modifier
-                    .height(50.dp),
+                    .height(60.dp),
                 shape = RoundedCornerShape(25),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF1E319C)
@@ -97,6 +101,8 @@ fun RoomScreen(
             RoomBody(
                 navController = navController
             )
+
+            BottomSheetRoom(showSheet) { showSheet = it }
         }
     }
 
@@ -105,6 +111,50 @@ fun RoomScreen(
         if (logout == true) {
             navController.navigate(Screen.Login.route) {
                 popUpTo(Screen.Room.route) { inclusive = true }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BottomSheetRoom(
+    showSheet: Boolean,
+    getValue: (Boolean) -> Unit
+){
+    if (showSheet) {
+        ModalBottomSheet (
+            onDismissRequest = { getValue(false) }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 25.dp)
+            ) {
+                Text(
+                    text = "Join room",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+                        .clickable{
+
+                        }
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .height(8.dp)
+                )
+
+                Text(
+                    text = "Create Room",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+                        .clickable{
+
+                        }
+                )
             }
         }
     }
