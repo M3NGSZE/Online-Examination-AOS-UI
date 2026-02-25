@@ -91,18 +91,14 @@ fun RoomOwnerScreen(
 
         if (indexTab == 0){
             FloatingActionButton (
-                onClick = { },
+                onClick = { navController.navigate(Screen.CreateExam.route) },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(end = 16.dp, bottom = 90.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add",
-                    modifier = Modifier
-                        .clickable{
-                            navController.navigate(Screen.CreateExam.route)
-                        }
+                    contentDescription = "Add"
                 )
             }
         }

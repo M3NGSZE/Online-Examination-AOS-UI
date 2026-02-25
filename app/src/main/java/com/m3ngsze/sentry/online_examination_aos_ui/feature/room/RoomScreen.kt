@@ -1,5 +1,6 @@
 package com.m3ngsze.sentry.online_examination_aos_ui.feature.room
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +17,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.NotificationsNone
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +49,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SearchBox
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.AuthViewModel
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RoomScreen(
     navController: NavHostController,
@@ -55,23 +61,44 @@ fun RoomScreen(
         viewModel.getUserProfile()
     }
 
-    Column(
-        modifier = Modifier
-            .padding(start = 25.dp, end = 25.dp)
-            .background(Color(0xFFFCFCFC))
-    ) {
+    Scaffold(
+        floatingActionButton = {
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .height(50.dp),
+                shape = RoundedCornerShape(25),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF1E319C)
+                ),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add or Join Class",
+                    modifier = Modifier
+                        .size(20.dp)
+                )
+            }
+        }
+    )
+    {
+        Column(
+            modifier = Modifier
+                .padding(start = 25.dp, end = 25.dp)
+                .background(Color(0xFFFCFCFC))
+        ) {
 
-        HeaderRoom(
-            navController = navController,
-            viewModel = viewModel,
-            authViewModel = authViewModel
-        )
+            HeaderRoom(
+                navController = navController,
+                viewModel = viewModel,
+                authViewModel = authViewModel
+            )
 
-        RoomBody(
-            navController = navController
-        )
+            RoomBody(
+                navController = navController
+            )
+        }
     }
-
 
     val logout = authViewModel.logoutState
     LaunchedEffect(logout) {
