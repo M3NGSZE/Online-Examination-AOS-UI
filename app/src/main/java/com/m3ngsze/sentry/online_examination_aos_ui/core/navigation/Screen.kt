@@ -33,4 +33,6 @@ sealed class Screen(val route: String, val title: String) {
 
     object CreateExam: Screen("create_exam_screen","createExam")
 
+    object Notification: Screen("notification_screen","notification")
+
 }

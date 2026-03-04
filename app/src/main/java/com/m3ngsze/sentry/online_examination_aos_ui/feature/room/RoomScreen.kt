@@ -132,7 +132,7 @@ fun BottomSheetRoom(
                     .padding(vertical = 8.dp, horizontal = 25.dp)
             ) {
                 Text(
-                    text = "Join room",
+                    text = "Join Room",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     modifier = Modifier
@@ -159,7 +159,6 @@ fun BottomSheetRoom(
         }
     }
 }
-
 
 @Composable
 fun HeaderRoom(
@@ -257,6 +256,9 @@ fun HeaderRoom(
                 modifier = Modifier
                     .padding(start = 15.dp)
                     .size(25.dp)
+                    .clickable{
+                        navController.navigate(Screen.Notification.route)
+                    }
             )
         }
     }
