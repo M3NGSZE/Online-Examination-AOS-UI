@@ -11,6 +11,8 @@ fun UserDTO.toDomain(): User{
         accountStatus = accountStatus.orEmpty(),
         firstName = firstName.orEmpty(),
         lastName = lastName.orEmpty(),
+        gender = gender.orEmpty(),
+        age = age,
         dateOfBirth = dateOfBirth,
         placeOfBirth = placeOfBirth,
         phoneNumber = phoneNumber,

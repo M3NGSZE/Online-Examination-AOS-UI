@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -40,15 +41,16 @@ import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.R
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.ProfileCardInfo
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.ProfileTabItem
+import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
 
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel()
 ){
-/*    LaunchedEffect (Unit) {
+    LaunchedEffect (Unit) {
         viewModel.getUserProfile()
-    }*/
+    }
 
     var switch by remember { mutableIntStateOf(0) }
 
@@ -92,9 +94,9 @@ fun ProfileHeader(
             imageVector = Icons.Default.ArrowBackIosNew,
             contentDescription = "Back to exam screen",
             modifier = Modifier
-//                .clickable{
-//                    navController.navigate(Screen.Room.route)
-//                }
+                .clickable{
+                    navController.navigate(Screen.Room.route)
+                }
         )
 
         Text(
@@ -168,17 +170,17 @@ fun ProfileInfo(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 ProfileCardInfo(
-                    value = "N/A",
+                    value = user?.gender ?: "N/A",
                     label = "GENDER"
                 )
 
                 ProfileCardInfo(
-                    value = "67",
+                    value = user?.age.toString(),
                     label = "AGE"
                 )
 
                 ProfileCardInfo(
-                    value = "67/67/67",
+                    value = user?.dateOfBirth ?: "67/67/67",
                     label = "BIRTHDAY"
                 )
             }

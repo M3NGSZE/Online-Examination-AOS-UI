@@ -8,6 +8,8 @@ data class User(
     val accountStatus: String,
     val firstName: String,
     val lastName: String,
+    val gender: String?,
+    val age: Int?,
     val dateOfBirth: String?,
     val placeOfBirth: String?,
     val phoneNumber: String?,

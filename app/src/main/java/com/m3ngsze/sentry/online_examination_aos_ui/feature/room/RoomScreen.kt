@@ -288,13 +288,15 @@ fun RoomBody(
     RoomCard(
         room = "PVH",
         sec = "Full Shift",
-        des = "13 Students"
+        des = "13 Students",
+        navController = navController
     )
 
     RoomCard(
         room = "Java Basic",
         sec = "Afternoon Shift",
-        des = "Chanelle Moon"
+        des = "Chanelle Moon",
+        navController = navController
     )
 }
 
@@ -302,7 +304,8 @@ fun RoomBody(
 fun RoomCard(
     room: String,
     sec: String,
-    des: String
+    des: String,
+    navController: NavHostController
 ){
     Row (
         modifier = Modifier
@@ -311,6 +314,10 @@ fun RoomCard(
                 color = Color(0xFFE3E4E8),
                 shape = RoundedCornerShape(20)
             )
+            .clickable{
+               if (room == "PVH") navController.navigate(Screen.RoomOwner.route) else navController.navigate(
+                   Screen.RoomDetail.route)
+            }
             .padding(15.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ){
