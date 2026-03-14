@@ -75,7 +75,7 @@ fun ProfileScreen(
         when (switch) {
             0 -> StatsTab()
             1 -> ResultTab()
-            2 -> InfoTab()
+            2 -> InfoTab(viewModel = viewModel)
         }
     }
 }

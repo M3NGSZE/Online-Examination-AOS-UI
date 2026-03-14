@@ -22,25 +22,30 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun InfoTab(){
+fun InfoTab(
+    viewModel: ProfileViewModel  = hiltViewModel()
+){
+    val user = viewModel.userState
+
     InfoCard(
         label = "Email",
         icon = Icons.Default.AlternateEmail,
-        value = "exam@gmail.com"
+        value = user?.email ?: "evans@gmail.com"
     )
 
     InfoCard(
         label = "Location",
         icon = Icons.Default.PhoneAndroid,
-        value = "0987654321"
+        value = user?.phoneNumber ?: "0987654321"
     )
 
     InfoCard(
         label = "Location",
         icon = Icons.Default.LocationOn,
-        value = "Phnom Penh"
+        value = user?.dateOfBirth ?: "AngkorWat"
     )
 }
 
