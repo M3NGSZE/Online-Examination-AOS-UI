@@ -45,7 +45,7 @@ fun InfoTab(
     InfoCard(
         label = "Location",
         icon = Icons.Default.LocationOn,
-        value = user?.dateOfBirth ?: "AngkorWat"
+        value = user?.placeOfBirth ?: "AngkorWat"
     )
 }
 

@@ -5,6 +5,7 @@ import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.ApiConstants
 import com.m3ngsze.sentry.online_examination_aos_ui.data.local.SessionManager
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.AuthApiService
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.RefreshApiService
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.RoomApiService
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api.UserApiService
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.interceptor.AuthInterceptor
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.interceptor.TokenAuthenticator
@@ -88,4 +89,9 @@ object NetworkModule {
     ): RefreshApiService =
         retrofit.create(RefreshApiService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideRoomApiService(
+        @Named("mainRetrofit") retrofit: Retrofit
+    ): RoomApiService = retrofit.create(RoomApiService::class.java)
 }

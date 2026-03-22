@@ -57,10 +57,18 @@ fun RoomScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
+    roomViewModel: RoomViewModel = hiltViewModel()
 ) {
+
+    var page: Int = 1
+    var size: Int = 3
+    var search: String? = null
+    var sort: String? = null
+    var room: String? = null
 
     LaunchedEffect(Unit) {
         viewModel.getUserProfile()
+        roomViewModel.getAllUserRooms(page, size, search, sort, room)
     }
 
     var showSheet by remember { mutableStateOf(false) }
@@ -99,7 +107,8 @@ fun RoomScreen(
             )
 
             RoomBody(
-                navController = navController
+                navController = navController,
+                roomViewModel = roomViewModel
             )
 
             BottomSheetRoom(showSheet) { showSheet = it }
@@ -267,6 +276,7 @@ fun HeaderRoom(
 @Composable
 fun RoomBody(
     navController: NavHostController,
+    roomViewModel: RoomViewModel
 ){
 
     Spacer(

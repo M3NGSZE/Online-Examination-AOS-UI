@@ -2,9 +2,11 @@ package com.m3ngsze.sentry.online_examination_aos_ui.core.network
 
 import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.AuthRepositoryImpl
 import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.RefreshTokenRepositoryImpl
+import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.RoomRepositoryImpl
 import com.m3ngsze.sentry.online_examination_aos_ui.data.repository.UserRepositoryImpl
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.AuthRepository
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.RefreshTokenRepository
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.RoomRepository
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindUserRepository(
         impl: UserRepositoryImpl
     ): UserRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindRoomRepository(
+        impl: RoomRepositoryImpl
+    ): RoomRepository
 }
