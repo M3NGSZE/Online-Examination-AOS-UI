@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m3ngsze.sentry.online_examination_aos_ui.core.constants.AppResult
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.ListResponse
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.ListDTO
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Room
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.usecase.RoomUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,7 @@ import javax.inject.Inject
 class RoomViewModel @Inject constructor(
     private val roomUseCase: RoomUseCase
 ): ViewModel() {
-    var roomState by mutableStateOf<Room?>(null)
+    var roomState by mutableStateOf<ListDTO<Room>?>(null)
 
     var errorState by mutableStateOf<String?>(null)
         private set

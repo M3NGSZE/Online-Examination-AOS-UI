@@ -49,7 +49,9 @@ import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileViewM
 import com.m3ngsze.sentry.online_examination_aos_ui.R
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SearchBox
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.AuthViewModel
+import java.util.UUID
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -61,15 +63,18 @@ fun RoomScreen(
 ) {
 
     var page: Int = 1
-    var size: Int = 3
+    var size: Int = 5
     var search: String? = null
     var sort: String? = null
     var room: String? = null
+
 
     LaunchedEffect(Unit) {
         viewModel.getUserProfile()
         roomViewModel.getAllUserRooms(page, size, search, sort, room)
     }
+
+    val user = viewModel.userState
 
     var showSheet by remember { mutableStateOf(false) }
 
@@ -103,11 +108,13 @@ fun RoomScreen(
             HeaderRoom(
                 navController = navController,
                 viewModel = viewModel,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                user = user
             )
 
             RoomBody(
                 navController = navController,
+                userId = user?.userId,
                 roomViewModel = roomViewModel
             )
 
@@ -174,8 +181,9 @@ fun HeaderRoom(
     navController: NavHostController,
     viewModel: ProfileViewModel  = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
+    user: User?
 ){
-    val user = viewModel.userState
+//    val user = viewModel.userState
     var expanded by remember { mutableStateOf(false) }
 
     Row(
@@ -276,6 +284,7 @@ fun HeaderRoom(
 @Composable
 fun RoomBody(
     navController: NavHostController,
+    userId: UUID?,
     roomViewModel: RoomViewModel
 ){
 

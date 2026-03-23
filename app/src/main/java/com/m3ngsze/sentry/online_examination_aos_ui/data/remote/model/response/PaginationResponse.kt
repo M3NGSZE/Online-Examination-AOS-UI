@@ -13,4 +13,7 @@ data class PaginationResponse(
     val previousPage: Int?,
     val firstPage: Int?,
     val lastPage: Int?
+
+//    val currentPage: Int,
+//    val hasNextPage: Boolean
 )

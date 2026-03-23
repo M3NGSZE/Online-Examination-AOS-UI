@@ -2,6 +2,7 @@ package com.m3ngsze.sentry.online_examination_aos_ui.data.remote.api
 
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.dto.RoomDTO
 import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.ApiResponse
+import com.m3ngsze.sentry.online_examination_aos_ui.data.remote.model.response.ListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,5 +14,5 @@ interface RoomApiService {
         @Query("search") search: String?,
         @Query("sort") sort: String?,
         @Query("room") room: String?,
-    ) : ApiResponse<RoomDTO>
+    ) : ApiResponse<ListResponse<RoomDTO>>
 }
