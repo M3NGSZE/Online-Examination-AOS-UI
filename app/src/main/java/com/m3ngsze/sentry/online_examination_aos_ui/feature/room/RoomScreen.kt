@@ -14,6 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +35,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,8 +52,11 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileViewModel
 import com.m3ngsze.sentry.online_examination_aos_ui.R
+import com.m3ngsze.sentry.online_examination_aos_ui.common.component.AuthItemRender
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SearchBox
+import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItemList
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
+import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Room
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.AuthViewModel
 import java.util.UUID
@@ -115,6 +123,8 @@ fun RoomScreen(
             RoomBody(
                 navController = navController,
                 userId = user?.userId,
+                page = page,
+                size = size,
                 roomViewModel = roomViewModel
             )
 
@@ -285,8 +295,15 @@ fun HeaderRoom(
 fun RoomBody(
     navController: NavHostController,
     userId: UUID?,
+    page: Int,
+    size: Int,
     roomViewModel: RoomViewModel
 ){
+
+    val listState = rememberLazyListState()
+
+    val rooms = roomViewModel.listRoomsState?.data ?: emptyList()
+
 
     Spacer(
         modifier = Modifier
@@ -304,19 +321,36 @@ fun RoomBody(
         getValue = {search = it}
     ) { }
 
-    RoomCard(
-        room = "PVH",
-        sec = "Full Shift",
-        des = "13 Students",
-        navController = navController
-    )
+    LazyColumn {
+        items(rooms) { room ->
+            RoomCard(
+                room = room.roomName ?: "No Name",
+                sec = room.section ?: "No Section",
+                des = "${if (room.userId == userId) room.student else room.lastname + room.lastname}",
+                navController = navController
+            )
+        }
+    }
 
-    RoomCard(
-        room = "Java Basic",
-        sec = "Afternoon Shift",
-        des = "Chanelle Moon",
-        navController = navController
-    )
+    val isAtBottom = remember {
+        derivedStateOf {
+            val layoutInfo = listState.layoutInfo
+            val totalItems = layoutInfo.totalItemsCount
+            val lastVisibleItemIndex =
+                layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+
+            lastVisibleItemIndex >= totalItems - 1
+        }
+    }
+
+    var page1 = page
+
+    LaunchedEffect(isAtBottom.value) {
+        if (isAtBottom.value) {
+            page1++
+            roomViewModel.getAllUserRooms(page1, size, null, null, null)
+        }
+    }
 }
 
 @Composable

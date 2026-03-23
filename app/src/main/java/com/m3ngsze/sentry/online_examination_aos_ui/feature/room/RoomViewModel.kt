@@ -18,7 +18,7 @@ import javax.inject.Inject
 class RoomViewModel @Inject constructor(
     private val roomUseCase: RoomUseCase
 ): ViewModel() {
-    var roomState by mutableStateOf<ListDTO<Room>?>(null)
+    var listRoomsState by mutableStateOf<ListDTO<Room>?>(null)
 
     var errorState by mutableStateOf<String?>(null)
         private set
@@ -27,7 +27,7 @@ class RoomViewModel @Inject constructor(
         viewModelScope.launch {
             errorState = null
             when(val result = roomUseCase.getAllUserRooms(page, size, search, sort, room)){
-                is AppResult.Success -> roomState = result.data
+                is AppResult.Success -> listRoomsState = result.data
                 is AppResult.Error -> errorState = result.message
             }
         }
