@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -116,8 +117,8 @@ fun RoomScreen(
             RoomBody(
                 navController = navController,
                 userId = user?.userId,
-                page = page,
-                size = size,
+//                page = page,
+//                size = size,
                 roomViewModel = roomViewModel,
                 filter = showFilter
             ) { showFilter = it }
@@ -334,8 +335,8 @@ fun HeaderRoom(
 fun RoomBody(
     navController: NavHostController,
     userId: UUID?,
-    page: Int,
-    size: Int,
+//    page: Int,
+//    size: Int,
     roomViewModel: RoomViewModel,
     filter: Boolean,
     isFilter: (Boolean) -> Unit
@@ -362,10 +363,8 @@ fun RoomBody(
         outline = Color(0x73919090),
         getValue = { search = it }
     ) {
-        onOff = !onOff
+        isFilter(!filter)
     }
-
-    isFilter(onOff)
 
     LazyColumn {
         items(rooms) { room ->
@@ -389,12 +388,16 @@ fun RoomBody(
         }
     }
 
-    var page1 = page
+    val newSearch = if (search == "") null else search
+
+    var page1 by remember { mutableIntStateOf(1) }
+    val size by remember { mutableIntStateOf(5) }
 
     LaunchedEffect(isAtBottom.value) {
+
         if (isAtBottom.value) {
             page1++
-            roomViewModel.getAllUserRooms(page1, size, search, null, null)
+            roomViewModel.getAllUserRooms(page1, size, newSearch, null, null)
         }
     }
 }
