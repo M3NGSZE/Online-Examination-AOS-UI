@@ -76,9 +76,9 @@ fun SearchBox(
             imageVector = Icons.Default.Tune,
             contentDescription = "filter",
             modifier = Modifier
-//                .clickable{
-//                    onMenuClick
-//                }
+                .clickable{
+                    onMenuClick()
+                }
         )
     }
 

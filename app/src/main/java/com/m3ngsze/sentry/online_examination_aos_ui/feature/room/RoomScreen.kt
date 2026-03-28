@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -52,11 +51,8 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.profile.ProfileViewModel
 import com.m3ngsze.sentry.online_examination_aos_ui.R
-import com.m3ngsze.sentry.online_examination_aos_ui.common.component.AuthItemRender
 import com.m3ngsze.sentry.online_examination_aos_ui.common.component.SearchBox
-import com.m3ngsze.sentry.online_examination_aos_ui.common.data.AuthItemList
 import com.m3ngsze.sentry.online_examination_aos_ui.core.navigation.Screen
-import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.Room
 import com.m3ngsze.sentry.online_examination_aos_ui.domain.model.User
 import com.m3ngsze.sentry.online_examination_aos_ui.feature.auth.AuthViewModel
 import java.util.UUID
@@ -70,19 +66,17 @@ fun RoomScreen(
     roomViewModel: RoomViewModel = hiltViewModel()
 ) {
 
-    var page: Int = 1
-    var size: Int = 5
-    var search: String? = null
-    var sort: String? = null
-    var room: String? = null
-
+    val page = 1
+    val size = 5
 
     LaunchedEffect(Unit) {
         viewModel.getUserProfile()
-        roomViewModel.getAllUserRooms(page, size, search, sort, room)
+        roomViewModel.getAllUserRooms(page, size, null, null, null)
     }
 
     val user = viewModel.userState
+
+    var showFilter by remember { mutableStateOf(false) }
 
     var showSheet by remember { mutableStateOf(false) }
 
@@ -115,7 +109,6 @@ fun RoomScreen(
 
             HeaderRoom(
                 navController = navController,
-                viewModel = viewModel,
                 authViewModel = authViewModel,
                 user = user
             )
@@ -125,8 +118,11 @@ fun RoomScreen(
                 userId = user?.userId,
                 page = page,
                 size = size,
-                roomViewModel = roomViewModel
-            )
+                roomViewModel = roomViewModel,
+                filter = showFilter
+            ) { showFilter = it }
+
+            FilterSearchRoom(showFilter) { showFilter = it }
 
             BottomSheetRoom(showSheet) { showSheet = it }
         }
@@ -137,6 +133,50 @@ fun RoomScreen(
         if (logout == true) {
             navController.navigate(Screen.Login.route) {
                 popUpTo(Screen.Room.route) { inclusive = true }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FilterSearchRoom(
+    showSheet: Boolean,
+    getValue: (Boolean) -> Unit
+){
+    if (showSheet) {
+        ModalBottomSheet (
+            onDismissRequest = { getValue(false) }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 25.dp)
+            ) {
+                Text(
+                    text = "ASCENDING",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+//                        .clickable{
+//
+//                        }
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .height(8.dp)
+                )
+
+                Text(
+                    text = "DESCENDING",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+//                        .clickable{
+//
+//                        }
+                )
             }
         }
     }
@@ -162,9 +202,9 @@ fun BottomSheetRoom(
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     modifier = Modifier
-                        .clickable{
-
-                        }
+//                        .clickable{
+//
+//                        }
                 )
 
                 Spacer(
@@ -177,9 +217,9 @@ fun BottomSheetRoom(
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     modifier = Modifier
-                        .clickable{
-
-                        }
+//                        .clickable{
+//
+//                        }
                 )
             }
         }
@@ -189,7 +229,6 @@ fun BottomSheetRoom(
 @Composable
 fun HeaderRoom(
     navController: NavHostController,
-    viewModel: ProfileViewModel  = hiltViewModel(),
     authViewModel: AuthViewModel = hiltViewModel(),
     user: User?
 ){
@@ -297,7 +336,9 @@ fun RoomBody(
     userId: UUID?,
     page: Int,
     size: Int,
-    roomViewModel: RoomViewModel
+    roomViewModel: RoomViewModel,
+    filter: Boolean,
+    isFilter: (Boolean) -> Unit
 ){
 
     val listState = rememberLazyListState()
@@ -311,6 +352,7 @@ fun RoomBody(
     )
 
     var search by remember { mutableStateOf("") }
+    var onOff by remember { mutableStateOf(filter) }
 
     SearchBox (
         modifier = Modifier
@@ -318,8 +360,12 @@ fun RoomBody(
             .height(50.dp),
         label = "Search",
         outline = Color(0x73919090),
-        getValue = {search = it}
-    ) { }
+        getValue = { search = it }
+    ) {
+        onOff = !onOff
+    }
+
+    isFilter(onOff)
 
     LazyColumn {
         items(rooms) { room ->
@@ -348,7 +394,7 @@ fun RoomBody(
     LaunchedEffect(isAtBottom.value) {
         if (isAtBottom.value) {
             page1++
-            roomViewModel.getAllUserRooms(page1, size, null, null, null)
+            roomViewModel.getAllUserRooms(page1, size, search, null, null)
         }
     }
 }
