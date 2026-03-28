@@ -353,7 +353,6 @@ fun RoomBody(
     )
 
     var search by remember { mutableStateOf("") }
-    var onOff by remember { mutableStateOf(filter) }
 
     SearchBox (
         modifier = Modifier
@@ -393,13 +392,16 @@ fun RoomBody(
     var page1 by remember { mutableIntStateOf(1) }
     val size by remember { mutableIntStateOf(5) }
 
-    LaunchedEffect(isAtBottom.value) {
+    var hasLoaded by remember { mutableStateOf(false) }
 
-        if (isAtBottom.value) {
+    LaunchedEffect(isAtBottom.value) {
+        if (isAtBottom.value && hasLoaded) {
             page1++
             roomViewModel.getAllUserRooms(page1, size, newSearch, null, null)
         }
+        hasLoaded = true
     }
+
 }
 
 @Composable
